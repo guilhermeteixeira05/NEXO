@@ -39,13 +39,14 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 - [x] Cadastrar as variáveis de ambiente (Supabase e Gemini) na Vercel.
 - [ ] Excluir as contas de teste `nexo.e2e.…@teste.dev` em Supabase → Authentication → Users (opcional).
 - [x] Criar o repositório no GitHub e enviar todas as branches.
-- [ ] Convidar os 4 colegas no GitHub (Settings → Collaborators).
+- [ ] Convidar Gabriel Pereira e Henrique Araujo Soares no GitHub (Settings → Collaborators).
+- [ ] Definir o responsável por cada uma das 5 frentes em [divisao-equipe.md](divisao-equipe.md).
 - [ ] Cada integrante fazer commits reais na sua `feature/*` (a rubrica avalia a colaboração no histórico).
 - [x] Publicar na Vercel (<https://nexo-a3.vercel.app>) e conferir as verificações pós-deploy.
 - [x] Rodar o Lighthouse na URL pública.
 - [ ] Rodar o WAVE na URL pública.
 - [x] Entrar no site publicado com uma conta e usar o Painel e o Assistente (conferido manualmente pelo grupo em 23/11/2026).
 - [ ] Realizar os testes de usabilidade com 5 participantes e preencher a tabela.
-- [ ] Compartilhar o Figma (Share → "Anyone with the link can view").
+- [x] Compartilhar o Figma ("Qualquer pessoa pode visualizar").
 - [ ] Gravar o vídeo (máx. 10 min).
 - [ ] Conferir todos os links: deploy, GitHub, Figma e vídeo.

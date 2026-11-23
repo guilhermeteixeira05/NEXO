@@ -1,10 +1,30 @@
 # Divisão do Projeto entre os Integrantes
 
-> Divisão definida pelo grupo. Cada integrante trabalha na sua branch `feature/*`, abre Pull Request para `develop` e revisa o PR de pelo menos um colega (ver [CONTRIBUTING.md](../CONTRIBUTING.md)). A documentação de RF, RNF e acessibilidade já está pronta e deve apenas ser **mantida atualizada** quando o código mudar.
+## Integrantes
+
+| Integrante | RA |
+|---|---|
+| Guilherme Pereira Teixeira | 824212194 |
+| Gabriel Pereira | 824228350 |
+| Henrique Araujo Soares | 824227998 |
+
+## Frentes de trabalho
+
+O projeto foi organizado em **5 frentes**, cada uma com sua branch `feature/*`. Como o grupo tem 3 integrantes, cada um assume uma ou mais frentes. O grupo deve preencher a coluna "Responsável":
+
+| Frente | Branch | Responsável |
+|---|---|---|
+| 1 — Interface e integração | `feature/interface` | _a definir pelo grupo_ |
+| 2 — Usuários e perfil | `feature/usuarios` | _a definir pelo grupo_ |
+| 3 — Tarefas e organização | `feature/tarefas` | _a definir pelo grupo_ |
+| 4 — Inteligência artificial | `feature/ia` | _a definir pelo grupo_ |
+| 5 — Acompanhamento | `feature/lembretes` | _a definir pelo grupo_ |
+
+> Cada integrante trabalha na sua branch `feature/*`, abre Pull Request para `develop` e revisa o PR de pelo menos um colega (ver [CONTRIBUTING.md](../CONTRIBUTING.md)). A documentação de RF, RNF e acessibilidade já está pronta e deve apenas ser **mantida atualizada** quando o código mudar.
 
 ## Responsabilidades e arquivos
 
-| Integrante | Escopo | Branch | Arquivos principais |
+| Frente | Escopo | Branch | Arquivos principais |
 |---|---|---|---|
 | **1 — Interface e integração** | Dashboard, navegação, identidade visual, responsividade, componentes compartilhados, integração dos módulos | `feature/interface` | `src/styles/*`, `src/components/ui/*`, `src/components/layout/*`, `src/components/dashboard/*`, `src/app/layout.tsx`, `src/app/(app)/layout.tsx`, `src/app/(app)/painel/`, `src/app/page.tsx`, `src/lib/snapshot.ts`, Figma |
 | **2 — Usuários e perfil** | Cadastro, autenticação, perfil, preferências, objetivos | `feature/usuarios` | `src/lib/auth/*`, `src/lib/profile/*`, `src/lib/supabase/*`, `src/proxy.ts`, `src/components/auth/*`, `src/components/profile/*`, `src/components/goals/*`, `src/app/entrar/`, `src/app/cadastro/`, `src/app/(onboarding)/`, `src/app/(app)/perfil/`, `src/app/(app)/objetivos/`, `src/app/(app)/configuracoes/` |
@@ -21,17 +41,17 @@ Os contratos são **tipos e funções exportadas**. Quem consome um contrato nã
 | Contrato | Fornecedor | Consumidores | Assinatura |
 |---|---|---|---|
 | Tipos de domínio | Todos (arquivo comum) | Todos | `src/lib/types.ts` (`Task`, `Goal`, `Plan`, `PlanItem`, `Reminder`, `ActivityLogEntry`...) |
-| Sessão | Integrante 2 | Todos | `requireUser()`, `getProfile()`, `getUserOrNull()` — `src/lib/auth/session.ts` |
-| Atividades | Integrante 3 | 1, 4, 5 | `listActiveTasks(supabase, userId)`, `listTasks(...)`, `getTask(...)` — `src/lib/tasks/queries.ts` |
-| Regras de atividade | Integrante 3 | 1, 4, 5 | `isOverdue`, `nextOccurrence`, `groupTasks`, `tasksOnDate`, `estimatedMinutes` — `src/lib/tasks/rules.ts` |
-| Objetivos e disponibilidade | Integrante 2 | 1, 4, 5 | `listGoals`, `listAvailability` — `src/lib/profile/queries.ts` |
-| Histórico | Integrante 5 | 2, 3, 4 | `logActivity(supabase, { userId, event, taskId?, planId?, title?, category?, details? })` — `src/lib/history/log.ts` |
-| Feriados | Integrante 5 | 1, 3, 4 | `fetchHolidays(ano)`, `fetchHolidaysBetween(inicio, fim)` → `{ ok, holidays } \| { ok: false, error }` |
-| Planejador | Integrante 4 | 1, 5 | `buildSchedule(input)` → `{ blocks, fixed, conflicts, unscheduled, notes, freeMinutesByDate }` |
-| Propostas | Integrante 4 | 1 | `PlanCard` (componente), `approvePlanAction(planId)`, `rejectPlanAction(planId)` |
-| Indicadores e sinais | Integrante 5 | 1, 4 | `computeMetrics(...)`, `computeSignals(...)`, `getBriefing(...)` |
-| Dados compartilhados | Integrante 1 | 1, 4, 5 | `loadUserSnapshot()` → `UserSnapshot` (`src/lib/snapshot.ts`) |
-| Componentes de UI | Integrante 1 | Todos | `Icon`, `Dialog`, `TextField`, `SelectField`, `SubmitButton`, `useActionForm`, `useToast`, `PageHeader`, `Notice`... |
+| Sessão | Frente 2 | Todos | `requireUser()`, `getProfile()`, `getUserOrNull()` — `src/lib/auth/session.ts` |
+| Atividades | Frente 3 | 1, 4, 5 | `listActiveTasks(supabase, userId)`, `listTasks(...)`, `getTask(...)` — `src/lib/tasks/queries.ts` |
+| Regras de atividade | Frente 3 | 1, 4, 5 | `isOverdue`, `nextOccurrence`, `groupTasks`, `tasksOnDate`, `estimatedMinutes` — `src/lib/tasks/rules.ts` |
+| Objetivos e disponibilidade | Frente 2 | 1, 4, 5 | `listGoals`, `listAvailability` — `src/lib/profile/queries.ts` |
+| Histórico | Frente 5 | 2, 3, 4 | `logActivity(supabase, { userId, event, taskId?, planId?, title?, category?, details? })` — `src/lib/history/log.ts` |
+| Feriados | Frente 5 | 1, 3, 4 | `fetchHolidays(ano)`, `fetchHolidaysBetween(inicio, fim)` → `{ ok, holidays } \| { ok: false, error }` |
+| Planejador | Frente 4 | 1, 5 | `buildSchedule(input)` → `{ blocks, fixed, conflicts, unscheduled, notes, freeMinutesByDate }` |
+| Propostas | Frente 4 | 1 | `PlanCard` (componente), `approvePlanAction(planId)`, `rejectPlanAction(planId)` |
+| Indicadores e sinais | Frente 5 | 1, 4 | `computeMetrics(...)`, `computeSignals(...)`, `getBriefing(...)` |
+| Dados compartilhados | Frente 1 | 1, 4, 5 | `loadUserSnapshot()` → `UserSnapshot` (`src/lib/snapshot.ts`) |
+| Componentes de UI | Frente 1 | Todos | `Icon`, `Dialog`, `TextField`, `SelectField`, `SubmitButton`, `useActionForm`, `useToast`, `PageHeader`, `Notice`... |
 
 ## Regras de integração
 
