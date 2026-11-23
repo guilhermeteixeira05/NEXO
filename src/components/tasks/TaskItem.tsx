@@ -120,7 +120,7 @@ export function TaskItem({
                     id={`adiar-${task.id}`}
                     type="date"
                     className="input"
-                    style={{ minHeight: 40, padding: "4px 8px" }}
+                    style={{ minHeight: 44, padding: "4px 8px" }}
                     min={addDays(today, 1)}
                     value={customDate}
                     onChange={(e) => setCustomDate(e.target.value)}

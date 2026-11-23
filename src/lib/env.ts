@@ -16,6 +16,37 @@ export function isSupabaseConfigured(): boolean {
   return getSupabaseEnv() !== null;
 }
 
+/**
+ * Provedores de IA suportados (somente no servidor):
+ * - "gemini": Google Gemini API — possui cota gratuita (padrão do projeto acadêmico);
+ * - "anthropic": Anthropic Claude — pago por uso.
+ * AI_PROVIDER força um provedor; sem ela, usa o primeiro que tiver chave (Gemini, depois Anthropic).
+ */
+export type AiProvider = "gemini" | "anthropic";
+
+export const AI_PROVIDER_LABELS: Record<AiProvider, string> = {
+  gemini: "Google Gemini",
+  anthropic: "Anthropic Claude",
+};
+
+export function getAiProvider(): AiProvider | null {
+  const forced = process.env.AI_PROVIDER?.trim().toLowerCase();
+  const hasGemini = Boolean(process.env.GEMINI_API_KEY);
+  const hasAnthropic = Boolean(process.env.ANTHROPIC_API_KEY);
+  if (forced === "gemini") return hasGemini ? "gemini" : null;
+  if (forced === "anthropic") return hasAnthropic ? "anthropic" : null;
+  if (hasGemini) return "gemini";
+  if (hasAnthropic) return "anthropic";
+  return null;
+}
+
+/** Somente no servidor. */
+export function getGeminiConfig(): { apiKey: string; model: string } | null {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) return null;
+  return { apiKey, model: process.env.GEMINI_MODEL || "gemini-3.5-flash-lite" };
+}
+
 /** Somente no servidor. */
 export function getAnthropicConfig(): { apiKey: string; model: string } | null {
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -24,7 +55,7 @@ export function getAnthropicConfig(): { apiKey: string; model: string } | null {
 }
 
 export function isAiConfigured(): boolean {
-  return Boolean(process.env.ANTHROPIC_API_KEY);
+  return getAiProvider() !== null;
 }
 
 export function getSiteUrl(): string {

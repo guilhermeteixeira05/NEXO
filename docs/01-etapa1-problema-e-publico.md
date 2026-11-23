@@ -166,7 +166,7 @@ Treinos, estudos, refeições e outras atividades podem ser cadastrados como **c
 
 ### 10.3 Premissas e restrições
 
-- A IA funciona por API real (Anthropic Claude), chamada apenas pelo servidor. Sem chave configurada, o chat informa que a IA está indisponível; ele nunca simula respostas.
+- A IA funciona por API real (Google Gemini no nível gratuito; Anthropic Claude como alternativa), chamada apenas pelo servidor. Sem chave configurada, o chat informa que a IA está indisponível; ele nunca simula respostas.
 - Toda alteração sugerida pela IA é apresentada como prévia e depende de aprovação explícita.
 - Lembretes são exibidos dentro da aplicação e, com permissão do usuário, como notificação do navegador enquanto o NEXO estiver aberto. Notificações *push* com o aplicativo fechado ficam para versões futuras.
 - Os feriados considerados são apenas os nacionais, que é o que a BrasilAPI disponibiliza.

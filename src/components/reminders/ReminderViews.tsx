@@ -1,7 +1,8 @@
 "use client";
 
+import { useActionForm } from "@/components/ui/useActionForm";
 import Link from "next/link";
-import { useActionState, useCallback, useEffect, useState, useSyncExternalStore, useTransition } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore, useTransition } from "react";
 import { Dialog } from "@/components/ui/Dialog";
 import { FormAlert, SelectField, TextField } from "@/components/ui/Field";
 import { Icon } from "@/components/ui/Icon";
@@ -21,7 +22,7 @@ export function ReminderForm({
   onDone: () => void;
 }) {
   const toast = useToast();
-  const [state, action] = useActionState(saveReminderAction.bind(null, null), initialActionState);
+  const { state, pending, onSubmit } = useActionForm(saveReminderAction.bind(null, null), initialActionState);
   const e = state.fieldErrors ?? {};
   useEffect(() => {
     if (state.ok) {
@@ -30,7 +31,7 @@ export function ReminderForm({
     }
   }, [state, toast, onDone]);
   return (
-    <form action={action} className="form" noValidate>
+    <form onSubmit={onSubmit} className="form" noValidate>
       <FormAlert message={state.ok ? undefined : state.message} ok={false} />
       <TextField label="Título" name="title" required maxLength={160} placeholder="Ex.: Beber água" errors={e.title} autoFocus />
       <div className="form-row form-row--2">
@@ -46,7 +47,7 @@ export function ReminderForm({
         options={[{ value: "", label: "Nenhuma (lembrete avulso)" }, ...tasks.map((t) => ({ value: t.id, label: t.title }))]}
       />
       <div className="actions actions--end">
-        <SubmitButton>Criar lembrete</SubmitButton>
+        <SubmitButton pending={pending}>Criar lembrete</SubmitButton>
       </div>
     </form>
   );

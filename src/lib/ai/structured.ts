@@ -2,6 +2,8 @@ import "server-only";
 import { z } from "zod";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { getAi } from "@/lib/ai/client";
+import { geminiStructured } from "@/lib/ai/gemini";
+import { getAiProvider } from "@/lib/env";
 import { BRIEFING_SYSTEM_PROMPT, PLAN_REVIEW_SYSTEM_PROMPT, WEEKLY_SUMMARY_SYSTEM_PROMPT } from "@/lib/ai/prompts";
 
 /**
@@ -36,6 +38,8 @@ async function parseWith<T extends z.ZodType>(
   user: string,
   effort: "low" | "medium",
 ): Promise<z.infer<T> | null> {
+  const provider = getAiProvider();
+  if (provider === "gemini") return geminiStructured(schema, system, user);
   const ai = getAi();
   if (!ai) return null;
   try {

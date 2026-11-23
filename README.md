@@ -32,7 +32,7 @@ O **NEXO** é um assistente pessoal com inteligência artificial que organiza ta
 |---|---|
 | **1. Usuários e perfil** | Cadastro, login/logout, configuração inicial em 4 etapas, perfil, preferências (período de foco, duração padrão, antecedência de lembretes, tema), objetivos com progresso, disponibilidade semanal, troca de senha |
 | **2. Tarefas e organização** | Tarefas, compromissos e hábitos; criar, editar, excluir (com confirmação), concluir/reabrir, adiar com um toque; prioridades, categorias, prazos e recorrência (diária, dias úteis, semanal, mensal); busca e filtros; calendário mensal; programação diária |
-| **3. Assistente com IA** | Chat com Claude usando os dados do usuário; consultas sobre a rotina; análise de tarefas e objetivos; propostas de reorganização com prévia; aprovar, rejeitar ou pedir ajustes; briefing proativo no Painel |
+| **3. Assistente com IA** | Chat com IA real (Google Gemini, gratuito; Anthropic Claude opcional) usando os dados do usuário; consultas sobre a rotina; análise de tarefas e objetivos; propostas de reorganização com prévia; aprovar, rejeitar ou pedir ajustes; briefing proativo no Painel |
 | **4. Planejamento inteligente** | Plano diário, semanal e reorganização de adiadas; ordenação por atraso, prioridade, prazo e objetivo; respeito à disponibilidade e aos compromissos; conflitos e atividades não encaixadas; sugestões de melhoria; revisão pela IA |
 | **5. Lembretes** | Lembretes avulsos ou de atividades, recorrentes; avisos das próximas 2 h; notificação diária de atrasadas; central de notificações; notificações do navegador (opcional) |
 | **6. Histórico e insights** | Linha do tempo de conclusões, adiamentos e planos; taxa de conclusão, concluídas por dia e por categoria; dia mais produtivo, período de pico, mais adiadas; acompanhamento de objetivos; resumo semanal gerado pela IA |
@@ -42,7 +42,7 @@ Fora do escopo desta versão: consultoria de investimentos, dietas, diagnóstico
 
 ## Tecnologias
 
-Next.js 16 (App Router) · React 19 · TypeScript · CSS (variáveis, Grid, Flexbox, media queries) · Supabase (PostgreSQL + Auth + RLS) · API Anthropic (Claude) · Zod · BrasilAPI · Vitest · PGlite · Playwright · axe-core · Lighthouse · Git/GitHub · Vercel.
+Next.js 16 (App Router) · React 19 · TypeScript · CSS (variáveis, Grid, Flexbox, media queries) · Supabase (PostgreSQL + Auth + RLS) · API Google Gemini (Anthropic Claude opcional) · Zod · BrasilAPI · Vitest · PGlite · Playwright · axe-core · Lighthouse · Git/GitHub · Vercel.
 Justificativa e versões: [arquitetura da aplicação](docs/arquitetura-aplicacao.md#2-tecnologias).
 
 ## Arquitetura
@@ -52,7 +52,7 @@ Navegador (React) ──► proxy.ts (sessão) ──► Páginas / Server Actio
                                               │            │                 │
                                    Regras puras (planejador, métricas, validação da IA)
                                               │            │                 │
-                                     Supabase (PostgreSQL + RLS)   Anthropic Claude   BrasilAPI
+                                     Supabase (PostgreSQL + RLS)   Google Gemini   BrasilAPI
 ```
 
 Interface, regras de negócio, persistência, serviços externos e integração com IA ficam em módulos separados. Diagramas, modelo de dados e segurança: [docs/arquitetura-aplicacao.md](docs/arquitetura-aplicacao.md).
@@ -73,7 +73,7 @@ Interface, regras de negócio, persistência, serviços externos e integração 
 
 ## Instalação
 
-**Requisitos:** Node.js 20.9 ou mais recente (testado no 26.13), npm, Git; conta gratuita no Supabase; chave da API Anthropic (para a IA).
+**Requisitos:** Node.js 20.9 ou mais recente (testado no 26.13), npm, Git; conta gratuita no Supabase; chave gratuita da API Gemini, gerada no Google AI Studio (para a IA).
 
 ```bash
 git clone https://github.com/SEU-USUARIO/nexo.git
@@ -103,16 +103,20 @@ Passo a passo completo: [docs/deploy-vercel.md](docs/deploy-vercel.md).
 |---|---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | navegador e servidor | Sim | `https://abcd.supabase.co` |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | navegador e servidor (protegida por RLS) | Sim | `sb_publishable_…` |
-| `ANTHROPIC_API_KEY` | **somente servidor** | Para a IA | `sk-ant-…` |
-| `ANTHROPIC_MODEL` | servidor | Não | `claude-haiku-5-5` (padrão) |
+| `GEMINI_API_KEY` | **somente servidor** | Para a IA | chave criada no Google AI Studio |
+| `GEMINI_MODEL` | servidor | Não | `gemini-3.5-flash-lite` (padrão) |
+| `ANTHROPIC_API_KEY` / `ANTHROPIC_MODEL` | **somente servidor** | Não (alternativa paga) | `sk-ant-…` / `claude-haiku-5-5` (padrão) |
+| `AI_PROVIDER` | servidor | Não | `gemini` ou `anthropic`, para forçar um provedor quando as duas chaves existem |
 | `NEXT_PUBLIC_SITE_URL` | link de confirmação de e-mail | Sim em produção | `https://nexo.vercel.app` |
 
 Nunca faça commit do `.env.local`. O `.env.example` não contém valores reais.
 
 ## Configuração da IA
 
-- Crie uma chave em <https://console.anthropic.com> e defina `ANTHROPIC_API_KEY`. O modelo padrão é `claude-haiku-5-5` (rápido e barato); para respostas mais elaboradas, use `ANTHROPIC_MODEL=claude-opus-5-5`.
-- A chave só é lida no servidor (`src/lib/ai/client.ts`). O navegador conversa com `/api/assistente`.
+- **Padrão gratuito: Google Gemini.** Entre em <https://aistudio.google.com/apikey> com uma conta Google, clique em **Create API key** e defina `GEMINI_API_KEY` no `.env.local` (e na Vercel). O modelo padrão é `gemini-3.5-flash-lite`, do nível gratuito; outro modelo pode ser escolhido em `GEMINI_MODEL`. O nível gratuito tem limite de requisições por minuto e por dia: ao atingi-lo, o chat explica que é preciso aguardar.
+- **Privacidade no nível gratuito:** o Google pode usar o conteúdo enviado para melhorar seus produtos, inclusive com revisão humana. A tela **Configurações** avisa o usuário, e o contexto enviado nunca inclui e-mail, senha ou IDs. Use dados de teste, não informações sensíveis.
+- **Alternativa paga:** com `ANTHROPIC_API_KEY`, o NEXO usa o Claude (`ANTHROPIC_MODEL`, padrão `claude-haiku-5-5`). Se as duas chaves existirem, vale o Gemini, a menos que `AI_PROVIDER=anthropic`. Os dois provedores usam o mesmo prompt, as mesmas ferramentas e a mesma validação.
+- As chaves só são lidas no servidor (`src/lib/ai/gemini.ts` e `src/lib/ai/client.ts`). O navegador conversa com `/api/assistente`.
 - Sem a chave, o chat informa que a IA não está configurada (**não há respostas simuladas**). O planejamento, o briefing e o resumo semanal passam a usar as regras locais e indicam isso na tela.
 - O que é enviado à IA: [arquitetura § 5](docs/arquitetura-aplicacao.md#5-segurança-e-privacidade).
 
@@ -128,7 +132,13 @@ npm run build
 npm run test:e2e     # Playwright + axe: páginas públicas em 8 larguras de tela (usa o Google Chrome instalado)
 ```
 
-Resultados de 23/11/2026: **95 testes automatizados aprovados**; axe com 0 violações WCAG 2.1 AA; Lighthouse com Acessibilidade, Boas práticas e SEO em 100. A suíte autenticada (`tests/e2e/app.spec.ts`) requer um Supabase de teste e está **pendente**. Relatório completo: [docs/relatorio-testes.md](docs/relatorio-testes.md).
+Fluxos com login (Supabase real configurado no `.env.local`, confirmação de e-mail desligada):
+
+```bash
+E2E_SUPABASE=1 npx playwright test tests/e2e/app.spec.ts    # PowerShell: $env:E2E_SUPABASE=1; npx playwright test tests/e2e/app.spec.ts
+```
+
+Resultados de 23/11/2026: **112 testes automatizados aprovados** (70 Vitest, 35 Playwright nas páginas públicas e 7 fluxos com login no Supabase real); axe com 0 violações WCAG 2.1 AA nas 3 páginas públicas e nas 10 telas autenticadas; Lighthouse com Acessibilidade, Boas práticas e SEO em 100. Ainda pendentes: o chat com resposta real da IA (depende da `GEMINI_API_KEY`), o WAVE e os testes com usuários. Relatório completo: [docs/relatorio-testes.md](docs/relatorio-testes.md).
 
 ## Publicação
 

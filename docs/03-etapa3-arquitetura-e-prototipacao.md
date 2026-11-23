@@ -223,7 +223,7 @@ sequenceDiagram
     participant API as /api/assistente (servidor)
     participant DB as Supabase (RLS)
     participant BR as BrasilAPI
-    participant AI as Claude API
+    participant AI as API de IA (Gemini)
 
     U->>UI: Digita "Como está minha programação de amanhã?"
     UI->>API: POST mensagem + conversationId

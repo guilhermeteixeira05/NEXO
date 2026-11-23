@@ -17,6 +17,25 @@ O axe marcou 1 item como "incompleto" (`color-contrast`, revisão manual) em cad
 1. O fim do gradiente do título (#22D3EE) tinha ~1,7:1 sobre o fundo claro → criado `--gradient-text` por tema: claro #1F57E7 → #0E7490 (≥ 5:1) e escuro #6E97FF → #22D3EE (≥ 7:1).
 2. No ponto mais escuro dos brilhos do fundo público (14% de opacidade), o texto do rodapé (#5B6B84) ficaria em ~4,1:1 → brilhos reduzidos para 8% e rodapé com a cor secundária (#4A5872, ~5,9:1).
 
+### axe-core nas telas autenticadas (Supabase real, tema claro, 1440 px)
+
+| Tela | Violações | Regras aprovadas | Incompletos (revisão manual) |
+|---|---|---|---|
+| `/painel` | 0 | 26 | `color-contrast` em 5 elementos |
+| `/tarefas` | 0 | 27 | — |
+| `/calendario` | 0 | 25 | — |
+| `/planejamento` | 0 | 27 | `color-contrast` em 1 elemento |
+| `/assistente` | 0 | 23 | — |
+| `/objetivos` | 0 | 24 | — |
+| `/lembretes` | 0 | 26 | — |
+| `/insights` | 0 | 28 | — |
+| `/perfil` | 0 | 26 | — |
+| `/configuracoes` | 0 | 27 | — |
+
+Os relatórios estão em `docs/relatorios/axe/app-*.json`. Os itens "incompletos" são elementos sobre fundos que o axe não consegue medir e ainda precisam de revisão manual (ver Pendências).
+
+A mesma suíte encontrou e **corrigiu**: `aria-pressed` em `<label>` nos seletores segmentados (axe crítico `aria-allowed-attr`) e o campo de data de "Adiar" com 40 px de altura.
+
 ### Lighthouse 13.6 (categoria Acessibilidade)
 
 | Página | Celular | Desktop |
@@ -59,15 +78,15 @@ Os relatórios completos estão em `docs/relatorios/lighthouse/*.json` (abra em 
 | 3.2.3 / 3.2.4 Consistência | Mesma navegação e mesmos componentes em todas as telas | Revisão |
 | 3.3.1–3.3.3 Erros | Texto junto ao campo, `aria-invalid`, sugestão de correção | Teste manual |
 | 3.3.4 Prevenção de erros | Confirmação de exclusão; propostas exigem aprovação | Teste manual |
-| 4.1.2 Nome, função, valor | `aria-pressed`, `aria-current`, `aria-expanded`, `role="switch"`, `role="progressbar"` com valores | axe |
+| 4.1.2 Nome, função, valor | `aria-pressed` (em botões), rádios nativos nos seletores segmentados, `aria-current`, `aria-expanded`, `role="switch"`, `role="progressbar"` com valores | axe |
 | 4.1.3 Mensagens de status | `role="status"`/`aria-live` nos avisos, no chat (`role="log"`) e nas contagens de filtro | Leitor de tela |
-| Alvos de toque (apostila) | Mínimo de 44 × 44 px; botões de 48 px | Playwright (aprovado nas páginas públicas) |
+| Alvos de toque (apostila) | Mínimo de 44 × 44 px; botões de 48 px; interruptores acionados pelo rótulo inteiro | Playwright (aprovado nas páginas públicas e nas 10 telas autenticadas) |
 
 ## 3. Pendências
 
 | Item | Responsável | Como fazer |
 |---|---|---|
-| Executar `tests/e2e/app.spec.ts` (axe e alvos de toque nas 10 telas autenticadas) | Equipe | Configurar Supabase de teste e rodar `E2E_SUPABASE=1 npx playwright test tests/e2e/app.spec.ts` |
+| Revisar o contraste dos itens "incompletos" do axe no Painel (5) e no Planejamento (1) | Integrante 1 | DevTools → inspecionar o elemento → contraste ≥ 4,5:1 |
 | Executar WAVE nas telas publicadas | Integrante 1 | Extensão WAVE no Chrome/Firefox |
 | Teste com leitor de tela (NVDA no Windows ou TalkBack no Android) | Equipe | Percorrer o fluxo: cadastro → criar atividade → aprovar plano |
 | Teste com zoom de 200% nas telas autenticadas | Equipe | Ctrl + "+" no navegador |

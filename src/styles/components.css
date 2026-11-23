@@ -529,9 +529,15 @@ legend {
   text-decoration: none;
 }
 .segmented__option[aria-pressed="true"],
-.segmented__option[aria-current="page"] {
+.segmented__option[aria-current="page"],
+.segmented__option[data-selected="true"] {
   background: var(--color-primary);
   color: var(--color-on-primary);
+}
+/* Opções feitas com <input type="radio"> oculto: o foco do teclado aparece no rótulo (WCAG 2.4.7) */
+.segmented__option:has(input:focus-visible) {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 /* Interruptor (checkbox estilizado, acessível como checkbox nativo) */

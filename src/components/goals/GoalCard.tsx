@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useCallback, useEffect, useState, useTransition } from "react";
+import { useActionForm } from "@/components/ui/useActionForm";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { Dialog } from "@/components/ui/Dialog";
 import { FormAlert, SelectField, TextAreaField, TextField } from "@/components/ui/Field";
 import { Icon } from "@/components/ui/Icon";
@@ -13,7 +14,7 @@ import { CATEGORIES, CATEGORY_LABELS, GOAL_STATUSES, GOAL_STATUS_LABELS, initial
 
 export function GoalForm({ goal, onDone }: { goal?: Goal; onDone: () => void }) {
   const toast = useToast();
-  const [state, action] = useActionState(saveGoalAction.bind(null, goal?.id ?? null), initialActionState);
+  const { state, pending, onSubmit } = useActionForm(saveGoalAction.bind(null, goal?.id ?? null), initialActionState);
   const e = state.fieldErrors ?? {};
   useEffect(() => {
     if (state.ok) {
@@ -22,7 +23,7 @@ export function GoalForm({ goal, onDone }: { goal?: Goal; onDone: () => void }) 
     }
   }, [state, toast, onDone]);
   return (
-    <form action={action} className="form" noValidate>
+    <form onSubmit={onSubmit} className="form" noValidate>
       <FormAlert message={state.ok ? undefined : state.message} ok={false} />
       <TextField label="Objetivo" name="title" defaultValue={goal?.title} required maxLength={120} placeholder="Ex.: Concluir a pós-graduação" errors={e.title} autoFocus />
       <TextAreaField label="Descrição" name="description" defaultValue={goal?.description ?? ""} optional rows={2} maxLength={1000} errors={e.description} />
@@ -35,7 +36,7 @@ export function GoalForm({ goal, onDone }: { goal?: Goal; onDone: () => void }) 
         <TextField label="Progresso (%)" name="progress" type="number" min={0} max={100} step={5} defaultValue={goal?.progress ?? 0} errors={e.progress} />
       </div>
       <div className="actions actions--end">
-        <SubmitButton>{goal ? "Salvar objetivo" : "Criar objetivo"}</SubmitButton>
+        <SubmitButton pending={pending}>{goal ? "Salvar objetivo" : "Criar objetivo"}</SubmitButton>
       </div>
     </form>
   );

@@ -116,7 +116,7 @@ export function ChatView({
           <div className="alert alert--warning" role="note">
             <Icon name="alerta" size={18} />
             <span>
-              A IA ainda não está configurada neste ambiente (falta <code>ANTHROPIC_API_KEY</code> no servidor). O chat não envia respostas
+              A IA ainda não está configurada neste ambiente (falta <code>GEMINI_API_KEY</code> no servidor). O chat não envia respostas
               simuladas. Veja o README para ativar.
             </span>
           </div>

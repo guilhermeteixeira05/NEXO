@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionForm } from "@/components/ui/useActionForm";
+import { useEffect, useState } from "react";
 import { FormAlert, SelectField, TextAreaField, TextField } from "@/components/ui/Field";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { useToast } from "@/components/ui/Toast";
@@ -40,7 +41,7 @@ export function TaskForm({
   onDone?: () => void;
 }) {
   const toast = useToast();
-  const [state, formAction] = useActionState(saveTaskAction.bind(null, task?.id ?? null), initialActionState);
+  const { state, pending, onSubmit } = useActionForm(saveTaskAction.bind(null, task?.id ?? null), initialActionState);
   const [kind, setKind] = useState<TaskKind>(task?.kind ?? "tarefa");
   const [recurrence, setRecurrence] = useState(task?.recurrence ?? "nenhuma");
   const e = state.fieldErrors ?? {};
@@ -57,7 +58,7 @@ export function TaskForm({
   const end = task?.end_at ? localTimeString(new Date(task.end_at), tz) : "";
 
   return (
-    <form action={formAction} className="form" noValidate>
+    <form onSubmit={onSubmit} className="form" noValidate>
       <FormAlert message={state.ok ? undefined : state.message} ok={false} />
       <TextField
         label="Título"
@@ -73,7 +74,7 @@ export function TaskForm({
         <legend>Tipo</legend>
         <div className="segmented" role="radiogroup" aria-label="Tipo da atividade">
           {TASK_KINDS.map((k) => (
-            <label key={k} className="segmented__option" aria-pressed={kind === k} style={{ cursor: "pointer" }}>
+            <label key={k} className="segmented__option" data-selected={kind === k} style={{ cursor: "pointer" }}>
               <input
                 type="radio"
                 name="kind"
@@ -157,7 +158,7 @@ export function TaskForm({
         <span>Criar lembrete com a antecedência padrão (quando houver horário)</span>
       </label>
       <div className="actions actions--end">
-        <SubmitButton pendingText="Salvando…">{task ? "Salvar alterações" : "Criar atividade"}</SubmitButton>
+        <SubmitButton pending={pending} pendingText="Salvando…">{task ? "Salvar alterações" : "Criar atividade"}</SubmitButton>
       </div>
     </form>
   );

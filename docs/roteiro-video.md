@@ -13,7 +13,7 @@
 | 4:00–5:00 | Tarefas e calendário | Integrante 3 | Nova atividade (compromisso com erro de horário → mensagem), concluir, adiar com 1 toque, calendário com feriado | Prevenção e recuperação de erros (H5, H9); feriados da **BrasilAPI** (API pública). |
 | 5:00–6:30 | IA e planejamento | Integrante 4 | Assistente: "Como está minha programação de amanhã?" → "Reorganize minhas atividades…" → cartão de proposta → Aprovar; Planejamento com conflitos | A IA usa os dados reais, propõe e espera aprovação; validação no servidor; chave protegida no servidor. |
 | 6:30–7:30 | Lembretes e insights | Integrante 5 | Novo lembrete, central de notificações, Insights (gráfico, padrões, resumo semanal) | Histórico alimentando indicadores; o briefing proativo do Painel. |
-| 7:30–8:30 | Arquitetura e qualidade | Integrante 4 ou 1 | Diagrama de `docs/arquitetura-aplicacao.md`; terminal com `npm run check` e Playwright | Next.js + Supabase (RLS) + Claude + BrasilAPI; 95 testes automatizados; Lighthouse Acessibilidade 100. |
+| 7:30–8:30 | Arquitetura e qualidade | Integrante 4 ou 1 | Diagrama de `docs/arquitetura-aplicacao.md`; terminal com `npm run check` e Playwright | Next.js + Supabase (RLS) + Google Gemini + BrasilAPI; 112 testes automatizados (inclusive fluxos com login no Supabase real); Lighthouse Acessibilidade 100. |
 | 8:30–9:30 | Responsividade e acessibilidade | Integrante 1 | DevTools: 320 → 768 → 1440 px; navegação só pelo teclado; tema escuro | Mobile First com os breakpoints da apostila; WCAG 2.1 AA; alvos de 44 px; as 10 heurísticas (destacar H1, H3, H5, H6, H9). |
 | 9:30–10:00 | Encerramento | Todos | Links do deploy, GitHub e Figma | Agradecimento e próximos passos (push com o app fechado, integração com agenda externa). |
 

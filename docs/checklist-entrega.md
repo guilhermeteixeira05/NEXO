@@ -15,8 +15,8 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 | Critério | Situação | Evidência |
 |---|---|---|
 | ≥ 5 heurísticas de Nielsen documentadas | ✅ | 10 aplicadas — [relatório de usabilidade](relatorio-usabilidade.md) |
-| Design responsivo e acessível (WCAG 2.1 AA) | ✅ público / ⏳ telas autenticadas | axe 0 violações, Lighthouse A11y 100 — [relatório de acessibilidade](relatorio-acessibilidade.md) |
-| Navegação mobile fluida, alvos de toque adequados | ✅ | Barra inferior, botão "+", alvos ≥ 44 px testados |
+| Design responsivo e acessível (WCAG 2.1 AA) | ✅ | axe com 0 violações nas páginas públicas e nas 10 telas autenticadas; Lighthouse A11y 100 — [relatório de acessibilidade](relatorio-acessibilidade.md) |
+| Navegação mobile fluida, alvos de toque adequados | ✅ | Barra inferior, botão "+", alvos ≥ 44 px testados nas páginas públicas e nas telas autenticadas |
 | Consumo de ao menos uma API REST pública | ✅ | BrasilAPI (feriados) com teste real |
 | Código limpo e modular + relatório técnico de usabilidade/acessibilidade | ✅ | ESLint/TypeScript sem erros; relatórios em `docs/` |
 
@@ -31,10 +31,12 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 
 ## Tarefas do grupo antes da entrega
 
-- [ ] Criar o projeto Supabase e aplicar a migração.
-- [ ] Gerar a chave da Anthropic (e definir um limite de gastos).
-- [ ] Configurar `.env.local` e rodar `npm run dev` localmente.
-- [ ] Rodar a suíte autenticada: `E2E_SUPABASE=1 npx playwright test tests/e2e/app.spec.ts` (Supabase de teste) e anotar o resultado no [relatório de testes](relatorio-testes.md).
+- [x] Criar o projeto Supabase e aplicar a migração.
+- [x] Configurar o Supabase no `.env.local`.
+- [x] Rodar a suíte autenticada (`E2E_SUPABASE=1 npx playwright test tests/e2e/app.spec.ts`): 7 de 7 aprovados em 23/11/2026 ([relatório de testes](relatorio-testes.md)).
+- [ ] Gerar a chave gratuita do Gemini em <https://aistudio.google.com/apikey> e colocá-la no `.env.local` como `GEMINI_API_KEY`.
+- [ ] Com a chave, rodar de novo a suíte autenticada para validar o chat com resposta real da IA.
+- [ ] Excluir as contas de teste `nexo.e2e.…@teste.dev` em Supabase → Authentication → Users (opcional).
 - [ ] Criar o repositório no GitHub, enviar `main` e `develop` e convidar os 4 colegas.
 - [ ] Cada integrante fazer commits reais na sua `feature/*` (a rubrica avalia a colaboração no histórico).
 - [ ] Publicar na Vercel e conferir as verificações pós-deploy.

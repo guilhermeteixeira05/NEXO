@@ -16,7 +16,8 @@ import {
  * Mensagens em português e orientadas à correção (heurística H9).
  */
 
-const emptyToUndefined = (v: unknown) => (typeof v === "string" && v.trim() === "" ? undefined : v);
+/** Campo vazio ou ausente do formulário (FormData.get devolve null quando o campo não existe) → undefined. */
+const emptyToUndefined = (v: unknown) => (v === null || (typeof v === "string" && v.trim() === "") ? undefined : v);
 const optionalText = (max: number, label: string) =>
   z.preprocess(emptyToUndefined, z.string().trim().max(max, `${label}: use no máximo ${max} caracteres.`).optional());
 const dateStr = (label: string) =>

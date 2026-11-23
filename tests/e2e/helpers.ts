@@ -26,8 +26,16 @@ export async function smallTouchTargets(page: Page): Promise<string[]> {
     els.forEach((el) => {
       const style = getComputedStyle(el);
       if (style.visibility === "hidden" || style.display === "none" || el.closest("[hidden], dialog:not([open])")) return;
-      const r = el.getBoundingClientRect();
+      // Conteúdo de <details> fechado (content-visibility: hidden) não está visível para o usuário
+      if (typeof el.checkVisibility === "function" && !el.checkVisibility({ contentVisibilityAuto: true, visibilityProperty: true })) return;
+      let r = el.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) return;
+      // Para campos, a área de toque inclui o <label> associado (clicar no rótulo aciona o campo)
+      const labels = el instanceof HTMLInputElement && el.labels ? Array.from(el.labels) : [];
+      for (const label of labels) {
+        const lr = label.getBoundingClientRect();
+        if (lr.width * lr.height > r.width * r.height && lr.width >= r.width && lr.height >= r.height) r = lr;
+      }
       if (el.classList.contains("skip-link") || el.classList.contains("sr-only")) return;
       // Links dentro de uma frase (texto corrido) são isentos do tamanho mínimo de alvo
       const parentText = el.parentElement?.textContent?.trim().length ?? 0;

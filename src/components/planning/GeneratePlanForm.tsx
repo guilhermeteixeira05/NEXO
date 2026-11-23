@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionForm } from "@/components/ui/useActionForm";
+import { useState } from "react";
 import { FormAlert } from "@/components/ui/Field";
 import { SubmitButton } from "@/components/ui/SubmitButton";
-import { generatePlanAction, type GeneratePlanState } from "@/lib/planning/actions";
+import { generatePlanAction } from "@/lib/planning/actions";
 
 const SCOPES = [
   { value: "diario", label: "Dia", help: "Encaixa as atividades pendentes nos horários livres da data escolhida." },
@@ -12,11 +13,11 @@ const SCOPES = [
 ] as const;
 
 export function GeneratePlanForm({ today, defaultScope, defaultDate }: { today: string; defaultScope: string; defaultDate: string }) {
-  const [state, action] = useActionState<GeneratePlanState, FormData>(generatePlanAction, { ok: false });
+  const { state, pending, onSubmit } = useActionForm(generatePlanAction, { ok: false });
   const [scope, setScope] = useState<string>(SCOPES.some((s) => s.value === defaultScope) ? defaultScope : "diario");
   const current = SCOPES.find((s) => s.value === scope)!;
   return (
-    <form action={action} className="panel form" aria-labelledby="titulo-gerar">
+    <form onSubmit={onSubmit} className="panel form" aria-labelledby="titulo-gerar">
       <h2 id="titulo-gerar" style={{ fontSize: "var(--text-lg)" }}>
         Gerar um plano
       </h2>
@@ -24,7 +25,7 @@ export function GeneratePlanForm({ today, defaultScope, defaultDate }: { today: 
         <legend>Tipo de plano</legend>
         <div className="segmented" role="radiogroup" aria-label="Tipo de plano">
           {SCOPES.map((s) => (
-            <label key={s.value} className="segmented__option" aria-pressed={scope === s.value} style={{ cursor: "pointer" }}>
+            <label key={s.value} className="segmented__option" data-selected={scope === s.value} style={{ cursor: "pointer" }}>
               <input type="radio" name="scope" value={s.value} checked={scope === s.value} onChange={() => setScope(s.value)} className="sr-only" />
               {s.label}
             </label>
@@ -41,7 +42,7 @@ export function GeneratePlanForm({ today, defaultScope, defaultDate }: { today: 
         <input id="data-plano" name="startDate" type="date" className="input" min={today} defaultValue={defaultDate} required />
       </div>
       <FormAlert message={state.message} ok={state.ok} />
-      <SubmitButton pendingText="Planejando…">Gerar plano</SubmitButton>
+      <SubmitButton pending={pending} pendingText="Planejando…">Gerar plano</SubmitButton>
       <p className="xsmall muted">O plano aparece como proposta. Nada muda na sua agenda até você aprovar.</p>
     </form>
   );

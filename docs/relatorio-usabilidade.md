@@ -46,6 +46,7 @@
 - Confirmação antes de excluir atividades e objetivos, informando que a ação não pode ser desfeita.
 - Validação no servidor com Zod: término posterior ao início, compromisso com data e horário, recorrência com data inicial (`src/lib/validation/schemas.ts`).
 - Campo de data para adiar não aceita datas passadas (`min`).
+- Campos opcionais que não aparecem na tela (ex.: "Repetir até" quando a atividade não se repete) são ignorados na validação, em vez de bloquear o cadastro (defeito encontrado nos testes autenticados e corrigido).
 - Propostas da IA validadas antes de gravar: atividade inexistente, data passada, compromisso fixo ou conflito de horário são recusados (`src/lib/ai/proposals.ts`).
 - Planos mostram **conflitos** e **atividades que não couberam** antes da aprovação.
 
@@ -73,7 +74,8 @@
 
 - Mensagens junto ao campo, com ícone, `aria-invalid` e `aria-describedby`, dizendo como corrigir ("Informe um horário de término depois do início.").
 - Falhas da BrasilAPI: "Feriados indisponíveis no momento", e a página continua funcionando.
-- Falhas da IA com causa e orientação (chave inválida, limite de requisições, sem conexão) — `aiErrorMessage`.
+- Falhas da IA com causa e orientação (chave inválida, limite gratuito atingido, sem conexão) — `aiErrorMessage`.
+- Depois de um envio recusado, o formulário **mantém o que foi digitado** e o usuário só corrige o campo indicado (`src/components/ui/useActionForm.ts`). Esse defeito (o React 19 limpava os campos) foi encontrado pelos testes autenticados e corrigido.
 - Página de erro com "Tentar novamente" e 404 com caminhos de volta.
 
 ### H10 — Ajuda e documentação ✅
@@ -90,11 +92,13 @@
 | Verificação | Ferramenta | Resultado (23/11/2026) |
 |---|---|---|
 | Sem rolagem horizontal de 320 a 1920 px (8 larguras) | Playwright (`tests/e2e/public.spec.ts`) | Aprovado nas páginas públicas |
-| Alvos de toque ≥ 44 × 44 px no celular e no tablet | Playwright | Aprovado nas páginas públicas (falha inicial no logotipo, com 36 px, corrigida) |
+| Sem rolagem horizontal nas 10 telas autenticadas (320, 768 e 1440 px) | Playwright (`tests/e2e/app.spec.ts`) + Supabase real | Aprovado |
+| Alvos de toque ≥ 44 × 44 px no celular e no tablet | Playwright | Aprovado nas páginas públicas (falha inicial no logotipo, com 36 px, corrigida) e nas telas autenticadas (campo de data de "Adiar", com 40 px, corrigido) |
+| Fluxos principais com login: cadastro, configuração inicial, criar/concluir/adiar, plano, lembrete, feriados | Playwright + Supabase real | Aprovado (7 de 7); dois defeitos de formulário encontrados e corrigidos (ver H5 e H9) |
 | Zoom de texto a 200% sem rolagem horizontal | Playwright | Aprovado |
 | Lighthouse: Acessibilidade / Boas práticas / SEO | Lighthouse 13.6 | 100 / 100 / 100 (celular e desktop) |
 
-As telas autenticadas têm a mesma suíte em `tests/e2e/app.spec.ts`, que **ainda não foi executada** porque depende de um projeto Supabase de teste (ver [relatório de testes](relatorio-testes.md)).
+Detalhes da suíte com login: [relatório de testes, seção 5.1](relatorio-testes.md#51-fluxos-com-login-no-supabase-real-testse2eappspects). Esses testes automatizados **não substituem** os testes com usuários reais da seção 3, que continuam pendentes.
 
 ## 3. Roteiro de teste de usabilidade com usuários
 

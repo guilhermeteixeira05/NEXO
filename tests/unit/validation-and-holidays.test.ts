@@ -15,6 +15,11 @@ describe("validação de formulários (servidor)", () => {
     expect(r.success).toBe(true);
     expect(r.data?.date).toBeUndefined();
   });
+  it("campo ausente no formulário (FormData.get → null) é tratado como vazio", () => {
+    // Regressão: com "Não se repete", o campo "Repetir até" não é exibido e chegava como null.
+    const r = taskSchema.safeParse({ ...base, date: "", recurrenceUntil: null, durationMinutes: null, goalId: null });
+    expect(r.success).toBe(true);
+  });
   it("recorrência exige data inicial", () => {
     expect(taskSchema.safeParse({ ...base, recurrence: "semanal" }).success).toBe(false);
   });
