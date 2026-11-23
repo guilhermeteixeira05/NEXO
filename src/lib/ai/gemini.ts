@@ -16,7 +16,7 @@ let cached: { ai: GoogleGenAI; model: string; key: string } | null = null;
  * atrasa a resposta; o usuário recebe a mensagem pedindo para aguardar.
  */
 export const GEMINI_HTTP_OPTIONS = {
-  timeout: 30_000, // por tentativa
+  timeout: 20_000, // por tentativa (o Flash-Lite costuma responder em poucos segundos)
   retryOptions: {
     attempts: 3, // inclui a primeira chamada
     initialDelay: 1, // segundos
