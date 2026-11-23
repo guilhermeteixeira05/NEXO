@@ -17,6 +17,7 @@
 | Configuração inicial | Barra de progresso e texto "Etapa 3 de 4" | `src/components/profile/OnboardingWizard.tsx` |
 | Planos | Selo "Aguardando sua aprovação" / "Aprovado" / "Rejeitado" e origem ("revisado pela IA" / "planejador local") | `src/components/planning/PlanCard.tsx` |
 | Tarefas | "N atividades encontradas" ao filtrar | `src/components/tasks/TaskBoard.tsx` |
+| Painel | O restante da tela aparece na hora; enquanto a IA prepara as sugestões, o espaço mostra "O NEXO está analisando sua rotina…" (`role="status"`) | `src/components/dashboard/BriefingPanel.tsx` |
 
 ### H2 — Correspondência entre o sistema e o mundo real ✅
 

@@ -32,7 +32,11 @@ test("cadastro e configuração inicial (RF01, RF03, RF07)", async () => {
   await page.getByLabel("Senha").fill(password);
   await page.getByRole("button", { name: "Criar conta" }).click();
   await expect(page).toHaveURL(/configuracao-inicial/, { timeout: 20_000 });
+  // uma etapa por vez: as próximas ficam escondidas
+  await expect(page.getByRole("heading", { name: "Vamos conhecer você" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Suas preferências" })).toBeHidden();
   await page.getByRole("button", { name: "Continuar" }).click();
+  await expect(page.getByRole("heading", { name: "Vamos conhecer você" })).toBeHidden();
   await page.getByRole("button", { name: "Continuar" }).click();
   await expect(page.getByRole("heading", { name: "Quando você tem tempo livre?" })).toBeVisible();
   await page.getByRole("button", { name: "Continuar" }).click();
@@ -105,12 +109,24 @@ test("assistente: responde com IA real ou informa que não está configurada (RF
 });
 
 test("telas autenticadas: responsividade e acessibilidade", async () => {
+  test.setTimeout(180_000); // 30 carregamentos de página + 10 varreduras do axe
   for (const path of ["/painel", "/tarefas", "/calendario", "/planejamento", "/assistente", "/objetivos", "/lembretes", "/insights", "/perfil", "/configuracoes"]) {
     for (const vp of [VIEWPORTS[0], VIEWPORTS[3], VIEWPORTS[6]]) {
       await page.setViewportSize({ width: vp.width, height: vp.height });
       await page.goto(path);
       expect(await horizontalOverflow(page), `${path} @ ${vp.name}`).toBeLessThanOrEqual(0);
-      if (vp.width <= 768) expect(await smallTouchTargets(page), `${path} @ ${vp.name}`).toEqual([]);
+      if (vp.width <= 768) {
+        expect(await smallTouchTargets(page), `${path} @ ${vp.name}`).toEqual([]);
+        // no celular e no tablet pequeno, "Nova atividade" fica só no botão flutuante "+"
+        await expect(page.locator(".topbar__new"), `${path} @ ${vp.name}`).toBeHidden();
+      }
+      // ids únicos (um id repetido fez o gradiente do logotipo sumir no celular)
+      const dupIds = await page.evaluate(() => {
+        const seen = new Map<string, number>();
+        document.querySelectorAll("[id]").forEach((el) => seen.set(el.id, (seen.get(el.id) ?? 0) + 1));
+        return [...seen].filter(([, n]) => n > 1).map(([id]) => id);
+      });
+      expect(dupIds, `${path} @ ${vp.name}`).toEqual([]);
     }
     const results = await axeScan(page, `app${path.replace(/\//g, "-")}`);
     expect(results.violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => v.id), path).toEqual([]);
