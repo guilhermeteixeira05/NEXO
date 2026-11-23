@@ -107,7 +107,9 @@
   align-items: center;
   gap: var(--space-2);
 }
-.topbar__new {
+/* "Nova atividade" no cabeçalho só a partir de 769 px (no celular há o botão "+").
+   O seletor com .topbar vence o .btn { display: inline-flex } de components.css. */
+.topbar .topbar__new {
   display: none;
 }
 
@@ -277,7 +279,7 @@
   .topbar__brand {
     display: none;
   }
-  .topbar__new {
+  .topbar .topbar__new {
     display: inline-flex;
   }
   .main {

@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BriefingPanel } from "@/components/dashboard/BriefingPanel";
+import { Suspense } from "react";
+import { BriefingSection, BriefingSkeleton } from "@/components/dashboard/BriefingPanel";
 import { TaskItem } from "@/components/tasks/TaskItem";
 import { Icon } from "@/components/ui/Icon";
 import { EmptyState, Notice, ProgressBar, SectionTitle, Stat } from "@/components/ui/Misc";
 import { firstName, requireUser } from "@/lib/auth/session";
 import { addDays, capitalize, diffDays, formatDateLong, formatDayMonth, greeting } from "@/lib/dates";
 import { computeMetrics } from "@/lib/insights/metrics";
-import { getBriefing } from "@/lib/insights/service";
 import { loadUserSnapshot } from "@/lib/snapshot";
 import { isOverdue, tasksOnDate } from "@/lib/tasks/rules";
 
@@ -19,7 +19,6 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const sp = await searchParams;
   const { profile, now, today, tasks } = snapshot;
   const tz = profile.timezone;
-  const briefing = await getBriefing(supabase, snapshot);
   const goals = snapshot.goals.map((g) => ({ id: g.id, title: g.title }));
 
   const pending = tasks.filter((t) => t.status === "pendente");
@@ -71,7 +70,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
       <div className="grid-dashboard">
         <div className="stack stack--lg">
-          <BriefingPanel briefing={briefing} />
+          <Suspense fallback={<BriefingSkeleton />}>
+            <BriefingSection supabase={supabase} snapshot={snapshot} />
+          </Suspense>
           <section aria-labelledby="titulo-agora" className="stack">
             <SectionTitle id="titulo-agora" title="Agora e a seguir" />
             {upcoming.length ? (
