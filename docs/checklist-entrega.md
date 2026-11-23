@@ -39,8 +39,8 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 - [x] Cadastrar as variáveis de ambiente (Supabase e Gemini) na Vercel.
 - [ ] Excluir as contas de teste `nexo.e2e.…@teste.dev` em Supabase → Authentication → Users (opcional).
 - [x] Criar o repositório no GitHub e enviar todas as branches.
-- [ ] Convidar Gabriel Pereira e Henrique Araujo Soares no GitHub (Settings → Collaborators).
-- [ ] Definir o responsável por cada uma das 5 frentes em [divisao-equipe.md](divisao-equipe.md).
+- [ ] Preencher o nome e o RA do 4º integrante (README, [docs/README.md](README.md) e [divisao-equipe.md](divisao-equipe.md)).
+- [ ] Convidar os demais integrantes no GitHub (Settings → Collaborators).
 - [ ] Cada integrante fazer commits reais na sua `feature/*` (a rubrica avalia a colaboração no histórico).
 - [x] Publicar na Vercel (<https://nexo-a3.vercel.app>) e conferir as verificações pós-deploy.
 - [x] Rodar o Lighthouse na URL pública.

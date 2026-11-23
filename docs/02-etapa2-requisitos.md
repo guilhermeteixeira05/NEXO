@@ -3,7 +3,7 @@
 > Entregável 1 de 3 da Etapa 2 (apostila, seção 1.4). Os demais são a [análise de concorrentes](02-etapa2-analise-concorrentes.md) e a [fundamentação de usabilidade](02-etapa2-fundamentacao-usabilidade.md).
 
 **Legenda de prioridade (MoSCoW):** **M** = obrigatório · **S** = importante · **C** = desejável.
-A coluna **Módulo** indica a frente de trabalho responsável (ver [divisão da equipe](divisao-equipe.md)).
+A coluna **Módulo** indica a frente de trabalho correspondente (ver [divisão da equipe](divisao-equipe.md)).
 
 ---
 

@@ -1,7 +1,7 @@
 # Roteiro do Vídeo de Apresentação (até 10 minutos)
 
 > Exigência da apostila (seção 1.2): "demonstração técnica e pitch do projeto com duração máxima de 10 minutos, apresentando o problema, a solução, a arquitetura e a conformidade heurística".
-> Sugestão de divisão: cada integrante (Guilherme, Gabriel e Henrique) apresenta as frentes pelas quais ficou responsável ([divisão da equipe](divisao-equipe.md)); a coluna "Quem" indica a frente. Grave em 1080p, com o navegador a 100% e o modo "Não perturbe" ativado.
+> Sugestão de divisão: o grupo distribui os blocos entre os integrantes; a coluna "Quem" indica a frente de trabalho de cada bloco ([divisão da equipe](divisao-equipe.md)). Grave em 1080p, com o navegador a 100% e o modo "Não perturbe" ativado.
 
 | Tempo | Bloco | Quem | O que mostrar | Fala-guia |
 |---|---|---|---|---|

@@ -7,18 +7,19 @@
 | Guilherme Pereira Teixeira | 824212194 |
 | Gabriel Pereira | 824228350 |
 | Henrique Araujo Soares | 824227998 |
+| _a preencher_ | _a preencher_ |
 
 ## Frentes de trabalho
 
-O projeto foi organizado em **5 frentes**, cada uma com sua branch `feature/*`. Como o grupo tem 3 integrantes, cada um assume uma ou mais frentes. O grupo deve preencher a coluna "Responsável":
+Todos os integrantes trabalharam no desenvolvimento. O código está organizado em **5 frentes**, cada uma com sua branch `feature/*`:
 
-| Frente | Branch | Responsável |
-|---|---|---|
-| 1 — Interface e integração | `feature/interface` | _a definir pelo grupo_ |
-| 2 — Usuários e perfil | `feature/usuarios` | _a definir pelo grupo_ |
-| 3 — Tarefas e organização | `feature/tarefas` | _a definir pelo grupo_ |
-| 4 — Inteligência artificial | `feature/ia` | _a definir pelo grupo_ |
-| 5 — Acompanhamento | `feature/lembretes` | _a definir pelo grupo_ |
+| Frente | Branch |
+|---|---|
+| 1 — Interface e integração | `feature/interface` |
+| 2 — Usuários e perfil | `feature/usuarios` |
+| 3 — Tarefas e organização | `feature/tarefas` |
+| 4 — Inteligência artificial | `feature/ia` |
+| 5 — Acompanhamento | `feature/lembretes` |
 
 > Cada integrante trabalha na sua branch `feature/*`, abre Pull Request para `develop` e revisa o PR de pelo menos um colega (ver [CONTRIBUTING.md](../CONTRIBUTING.md)). A documentação de RF, RNF e acessibilidade já está pronta e deve apenas ser **mantida atualizada** quando o código mudar.
 

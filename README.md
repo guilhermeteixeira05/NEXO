@@ -10,7 +10,7 @@ O **NEXO** é um assistente pessoal com inteligência artificial que organiza ta
 
 | | |
 |---|---|
-| **Equipe** | Guilherme Pereira Teixeira (RA 824212194) · Gabriel Pereira (RA 824228350) · Henrique Araujo Soares (RA 824227998) |
+| **Equipe** | Guilherme Pereira Teixeira (RA 824212194) · Gabriel Pereira (RA 824228350) · Henrique Araujo Soares (RA 824227998) · _4º integrante: a preencher_ |
 | **Repositório** | <https://github.com/guilhermeteixeira05/NEXO> |
 | **Figma** | <https://www.figma.com/design/9hzmKgGYbPMaTvYTgbRyRn> ([organização do arquivo](docs/figma.md)) |
 | **Aplicação publicada** | <https://nexo-a3.vercel.app> (Vercel) |
@@ -155,8 +155,9 @@ Vercel + Supabase. Importe o repositório em <https://vercel.com/new>, cadastre 
 | Guilherme Pereira Teixeira | 824212194 |
 | Gabriel Pereira | 824228350 |
 | Henrique Araujo Soares | 824227998 |
+| _a preencher_ | _a preencher_ |
 
-O trabalho está organizado em 5 frentes (interface, usuários, tarefas, IA e acompanhamento), cada uma com sua branch `feature/*` e contratos entre módulos: [docs/divisao-equipe.md](docs/divisao-equipe.md). Fluxo de trabalho, padrão de commits e como enviar ao GitHub: [CONTRIBUTING.md](CONTRIBUTING.md).
+Todos os integrantes trabalharam no desenvolvimento. O código está organizado em 5 frentes (interface, usuários, tarefas, IA e acompanhamento), cada uma com sua branch `feature/*` e contratos entre módulos: [docs/divisao-equipe.md](docs/divisao-equipe.md). Fluxo de trabalho, padrão de commits e como enviar ao GitHub: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 <a id="figma"></a>**Figma:** <https://www.figma.com/design/9hzmKgGYbPMaTvYTgbRyRn>
 

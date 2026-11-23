@@ -1,6 +1,6 @@
 # Como contribuir com o NEXO
 
-Guia para os integrantes do grupo: Guilherme Pereira Teixeira, Gabriel Pereira e Henrique Araujo Soares. Frentes de trabalho, responsáveis e contratos entre módulos: [docs/divisao-equipe.md](docs/divisao-equipe.md).
+Guia para os integrantes do grupo (lista em [docs/divisao-equipe.md](docs/divisao-equipe.md), junto com as frentes de trabalho e os contratos entre módulos).
 
 ## Branches
 
@@ -74,5 +74,5 @@ No primeiro `git push`, o Git Credential Manager abre a janela "Connect to GitHu
 
 Configuração do repositório (feita pelo dono):
 
-1. Em **Settings → Collaborators**, convide Gabriel Pereira e Henrique Araujo Soares (cada um aceita o convite recebido por e-mail).
+1. Em **Settings → Collaborators**, convide os demais integrantes (cada um aceita o convite recebido por e-mail).
 2. Recomendado: em **Settings → Branches**, proteja `main` e `develop` (exigir Pull Request e 1 aprovação).

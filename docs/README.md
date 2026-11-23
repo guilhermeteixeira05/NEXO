@@ -7,6 +7,7 @@
 | Guilherme Pereira Teixeira | 824212194 |
 | Gabriel Pereira | 824228350 |
 | Henrique Araujo Soares | 824227998 |
+| _a preencher_ | _a preencher_ |
 
 ## Projeto acadêmico (Projeto A3)
 
