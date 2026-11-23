@@ -166,7 +166,7 @@ erDiagram
 
 | Recurso | Arquivo | Como funciona |
 |---|---|---|
-| Chat | `src/app/api/assistente/route.ts`, `src/lib/ai/chat.ts`, `src/lib/ai/gemini.ts` | Envia o prompt de sistema, o contexto do usuário e as últimas 20 mensagens; laço de até 5 rodadas de ferramentas (Gemini: `functionDeclarations`, preservando o turno do modelo; Claude: `tools`, com o prompt em cache) |
+| Chat | `src/app/api/assistente/route.ts`, `src/lib/ai/chat.ts`, `src/lib/ai/gemini.ts` | Envia o prompt de sistema, o contexto do usuário e as últimas 20 mensagens; laço de até 5 rodadas de ferramentas (Gemini: `functionDeclarations`, preservando o turno do modelo; Claude: `tools`, com o prompt em cache). Falhas temporárias (408 e 5xx) são repetidas até 3 vezes pelo SDK; o 429 não |
 | Ferramenta `consultar_planejador` | `chat.ts` | Somente leitura: devolve horários livres, compromissos e o rascunho do planejador local |
 | Ferramenta `propor_alteracoes` | `chat.ts`, `proposals.ts` | Cria uma **proposta** (`plans` + `plan_items`) depois da validação; com erro, devolve a mensagem para a IA corrigir |
 | Briefing proativo | `src/lib/insights/service.ts`, `structured.ts` | Sinais por regras → texto personalizado pela IA (JSON validado); no máximo uma vez por dia |
