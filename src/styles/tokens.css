@@ -1,0 +1,130 @@
+/* ==========================================================================
+   NEXO — Design tokens (espelham as variáveis do Figma: "Tema claro" / "Tema escuro")
+   Breakpoints (apostila, seção 3.1) — usados com min-width (Mobile First):
+     Mobile 320–480 | Tablet pequeno 481–768 | Desktop pequeno 769–1024
+     Desktop 1025–1200 | Telas grandes ≥ 1201
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* Cores — tema claro (padrão) */
+  --color-bg: #f4f7fd;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef2f9;
+  --color-primary: #1f57e7;
+  --color-primary-hover: #1a47c2;
+  --color-primary-soft: #e3ecff;
+  --color-border: #dde4f0;
+  --color-border-strong: #6b7a96;
+  --color-focus: #1f57e7;
+  --color-text: #0b1530;
+  --color-text-secondary: #4a5872;
+  --color-text-muted: #5b6b84;
+  --color-on-primary: #ffffff;
+  --color-link: #1a47c2;
+  --color-accent: #0e7490;
+  --color-success: #15803d;
+  --color-success-soft: #e7f6ec;
+  --color-warning: #b45309;
+  --color-warning-soft: #fef3e2;
+  --color-danger: #dc2626;
+  --color-danger-soft: #fdecec;
+  --color-overlay: rgb(5 11 26 / 0.55);
+  --gradient-brand: linear-gradient(135deg, #1f57e7 0%, #22d3ee 100%);
+  /* Gradiente para TEXTO: todas as cores com contraste ≥ 4,5:1 sobre o fundo claro */
+  --gradient-text: linear-gradient(135deg, #1f57e7 0%, #0e7490 100%);
+
+  /* Elevação */
+  --shadow-1: 0 2px 8px rgb(10 21 48 / 0.08);
+  --shadow-2: 0 12px 32px -4px rgb(10 21 48 / 0.18);
+
+  /* Tipografia (fontes carregadas por next/font em layout.tsx) */
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-grotesk), var(--font-sans);
+  --text-xs: 0.75rem;   /* 12 */
+  --text-sm: 0.875rem;  /* 14 */
+  --text-base: 1rem;    /* 16 */
+  --text-lg: 1.125rem;  /* 18 */
+  --text-xl: 1.375rem;  /* 22 */
+  --text-2xl: 1.75rem;  /* 28 */
+  --text-3xl: 2.5rem;   /* 40 */
+
+  /* Espaçamento (grade de 4 px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  /* Raios */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  /* Medidas de layout */
+  --touch: 44px;            /* alvo de toque mínimo */
+  --sidebar-w: 248px;
+  --rail-w: 84px;
+  --bottomnav-h: 72px;
+  --content-max: 1440px;
+}
+
+/* Tema escuro: automático pelo sistema, a menos que o usuário escolha "claro" */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="claro"]) {
+    color-scheme: dark;
+    --color-bg: #050b1a;
+    --color-surface: #0c1834;
+    --color-surface-2: #13234a;
+    --color-primary-soft: #1e3266;
+    --color-border: #1e3266;
+    --color-border-strong: #5470b8;
+    --color-focus: #67e8f9;
+    --color-text: #eaf0ff;
+    --color-text-secondary: #a9b7d6;
+    --color-text-muted: #8394b8;
+    --color-link: #8fb0ff;
+    --color-accent: #22d3ee;
+    --color-success: #4ade80;
+    --color-success-soft: #0e2e1e;
+    --color-warning: #fbbf24;
+    --color-warning-soft: #3a2a0c;
+    --color-danger: #f87171;
+    --color-danger-soft: #3a1620;
+    --gradient-text: linear-gradient(135deg, #6e97ff 0%, #22d3ee 100%);
+    --shadow-1: 0 2px 8px rgb(0 0 0 / 0.3);
+    --shadow-2: 0 12px 32px -4px rgb(0 0 0 / 0.5);
+  }
+}
+
+/* Tema escuro escolhido manualmente */
+:root[data-theme="escuro"] {
+  color-scheme: dark;
+  --color-bg: #050b1a;
+  --color-surface: #0c1834;
+  --color-surface-2: #13234a;
+  --color-primary-soft: #1e3266;
+  --color-border: #1e3266;
+  --color-border-strong: #5470b8;
+  --color-focus: #67e8f9;
+  --color-text: #eaf0ff;
+  --color-text-secondary: #a9b7d6;
+  --color-text-muted: #8394b8;
+  --color-link: #8fb0ff;
+  --color-accent: #22d3ee;
+  --color-success: #4ade80;
+  --color-success-soft: #0e2e1e;
+  --color-warning: #fbbf24;
+  --color-warning-soft: #3a2a0c;
+  --color-danger: #f87171;
+  --color-danger-soft: #3a1620;
+  --gradient-text: linear-gradient(135deg, #6e97ff 0%, #22d3ee 100%);
+  --shadow-1: 0 2px 8px rgb(0 0 0 / 0.3);
+  --shadow-2: 0 12px 32px -4px rgb(0 0 0 / 0.5);
+}
