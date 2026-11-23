@@ -6,6 +6,8 @@ import { defineConfig, devices } from "@playwright/test";
  * do Playwright com `npx playwright install chromium` e PW_CHANNEL="" .
  */
 const PORT = Number(process.env.E2E_PORT ?? 3100);
+/** Para testar o site publicado: E2E_BASE_URL=https://nexo-a3.vercel.app (não sobe servidor local). */
+const BASE_URL = process.env.E2E_BASE_URL;
 
 export default defineConfig({
   testDir: "tests/e2e",
@@ -14,17 +16,19 @@ export default defineConfig({
   workers: 1,
   reporter: [["list"], ["json", { outputFile: "test-results/e2e-report.json" }]],
   use: {
-    baseURL: `http://localhost:${PORT}`,
+    baseURL: BASE_URL ?? `http://localhost:${PORT}`,
     channel: process.env.PW_CHANNEL ?? "chrome",
     locale: "pt-BR",
     timezoneId: "America/Sao_Paulo",
     trace: "retain-on-failure",
   },
   projects: [{ name: "chrome", use: { ...devices["Desktop Chrome"], channel: process.env.PW_CHANNEL ?? "chrome" } }],
-  webServer: {
-    command: `npm run start -- -p ${PORT}`,
-    url: `http://localhost:${PORT}`,
-    reuseExistingServer: true,
-    timeout: 120_000,
-  },
+  webServer: BASE_URL
+    ? undefined
+    : {
+        command: `npm run start -- -p ${PORT}`,
+        url: `http://localhost:${PORT}`,
+        reuseExistingServer: true,
+        timeout: 120_000,
+      },
 });
