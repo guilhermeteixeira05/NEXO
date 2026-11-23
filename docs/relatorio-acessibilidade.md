@@ -42,6 +42,7 @@ A mesma suíte encontrou e **corrigiu**: `aria-pressed` em `<label>` nos seletor
 |---|---|---|
 | `/` | 100 | 100 |
 | `/configurar` | 100 | 100 |
+| `/` no site publicado (https://nexo-a3.vercel.app) | 100 | 100 |
 
 Os relatórios completos estão em `docs/relatorios/lighthouse/*.json` (abra em <https://googlechrome.github.io/lighthouse/viewer/>).
 

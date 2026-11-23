@@ -139,7 +139,18 @@ Executado com `npx lighthouse@13.6.0 <url> --preset=desktop` (ou sem preset, par
 | `/configurar` | Celular | 95 | 100 | 100 | 100 | 0,8 s | 0 |
 | `/configurar` | Desktop | 100 | 100 | 100 | 100 | 0,2 s | 0 |
 
-A meta do RNF08 (Desempenho ≥ 80) foi atingida. Execução local, sem CDN; os valores na Vercel podem variar.
+A meta do RNF08 (Desempenho ≥ 80) foi atingida. Execução local, sem CDN.
+
+## 6.1 Lighthouse no site publicado (Vercel)
+
+Executado em 23/11/2026 em <https://nexo-a3.vercel.app> (`docs/relatorios/lighthouse/vercel-*.json`):
+
+| Página | Perfil | Desempenho | Acessibilidade | Boas práticas | SEO | LCP | CLS |
+|---|---|---|---|---|---|---|---|
+| `/` | Celular | 94 | 100 | 100 | 100 | 1,0 s | 0 |
+| `/` | Desktop | 82 | 100 | 100 | 100 | 0,4 s | 0 |
+
+No mesmo dia, os 35 testes de `tests/e2e/public.spec.ts` (responsividade em 8 larguras, axe, cabeçalhos de segurança e rotas protegidas) foram aprovados contra o site publicado: `E2E_BASE_URL=https://nexo-a3.vercel.app npx playwright test tests/e2e/public.spec.ts`.
 
 ## 7. Matriz de cobertura dos módulos
 

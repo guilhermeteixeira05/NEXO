@@ -6,7 +6,7 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 
 | Item | Situação | Observação |
 |---|---|---|
-| Aplicação hospedada e funcional (Vercel/Netlify) | ⏳ | Build aprovado; publicar conforme [deploy-vercel.md](deploy-vercel.md) e colar a URL no README |
+| Aplicação hospedada e funcional (Vercel/Netlify) | ✅ | <https://nexo-a3.vercel.app>: 35 testes públicos aprovados no site publicado; Lighthouse A11y, BP e SEO 100 |
 | Repositório Git versionado, README, instruções e histórico de commits | ✅ | <https://github.com/guilhermeteixeira05/NEXO>, com `main`, `develop`, 5 branches `feature/*` e commits por funcionalidade ([CONTRIBUTING.md](../CONTRIBUTING.md)) |
 | Vídeo de até 10 min (problema, solução, arquitetura, heurísticas) | ⏳ | Roteiro pronto: [roteiro-video.md](roteiro-video.md) |
 
@@ -36,13 +36,15 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 - [x] Rodar a suíte autenticada (`E2E_SUPABASE=1 npx playwright test tests/e2e/app.spec.ts`): 7 de 7 aprovados em 23/11/2026 ([relatório de testes](relatorio-testes.md)).
 - [x] Gerar a chave gratuita do Gemini e colocá-la no `.env.local` (`GEMINI_API_KEY`).
 - [x] Rodar de novo a suíte autenticada com a IA real: 7 de 7 aprovados.
-- [ ] Cadastrar a `GEMINI_API_KEY` também nas variáveis de ambiente da Vercel.
+- [x] Cadastrar as variáveis de ambiente (Supabase e Gemini) na Vercel.
 - [ ] Excluir as contas de teste `nexo.e2e.…@teste.dev` em Supabase → Authentication → Users (opcional).
 - [x] Criar o repositório no GitHub e enviar todas as branches.
 - [ ] Convidar os 4 colegas no GitHub (Settings → Collaborators).
 - [ ] Cada integrante fazer commits reais na sua `feature/*` (a rubrica avalia a colaboração no histórico).
-- [ ] Publicar na Vercel e conferir as verificações pós-deploy.
-- [ ] Rodar WAVE e Lighthouse na URL pública.
+- [x] Publicar na Vercel (<https://nexo-a3.vercel.app>) e conferir as verificações pós-deploy.
+- [x] Rodar o Lighthouse na URL pública.
+- [ ] Rodar o WAVE na URL pública.
+- [ ] Entrar no site publicado com uma conta e testar Painel, Assistente e Planejamento.
 - [ ] Realizar os testes de usabilidade com 5 participantes e preencher a tabela.
 - [ ] Compartilhar o Figma (Share → "Anyone with the link can view").
 - [ ] Gravar o vídeo (máx. 10 min).
