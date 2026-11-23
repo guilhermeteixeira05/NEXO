@@ -7,8 +7,8 @@
 | Item | Situação | Onde |
 |---|---|---|
 | Aplicação web Next.js 16 + React 19 + TypeScript | ✅ Concluída | `src/` |
-| Banco de dados Supabase com RLS | ✅ Migração pronta e testada em PostgreSQL | `supabase/migrations/` |
-| IA real (Anthropic Claude), chamada pelo servidor | ✅ Implementada; ativa ao definir `ANTHROPIC_API_KEY` | `src/lib/ai/`, `src/app/api/assistente/` |
+| Banco de dados Supabase com RLS | ✅ Migração aplicada no Supabase e testada (PostgreSQL local e fluxos reais) | `supabase/migrations/` |
+| IA real, chamada pelo servidor: Google Gemini (gratuito) ou Anthropic Claude (opcional) | ✅ Implementada; ativa ao definir `GEMINI_API_KEY` (ou `ANTHROPIC_API_KEY`) | `src/lib/ai/`, `src/app/api/assistente/` |
 | API pública BrasilAPI | ✅ Implementada e testada com chamada real | `src/lib/holidays/brasilapi.ts` |
 | Os 6 módulos usando os mesmos dados | ✅ | `src/lib/snapshot.ts` |
 
@@ -26,7 +26,7 @@ Uma atividade cadastrada em **Tarefas** (`tasks`):
 
 ## 2. Testes de responsividade em múltiplos viewports
 
-Executados com Playwright em 8 larguras (320, 375, 480, 768, 1024, 1200, 1440 e 1920 px), cobrindo as 5 faixas da apostila. Resultado: **sem rolagem horizontal** e **alvos de toque ≥ 44 px** nas páginas públicas. Detalhes e capturas: [relatório de testes](relatorio-testes.md#5-interface-responsividade-e-acessibilidade-testse2epublicspects).
+Executados com Playwright em 8 larguras (320, 375, 480, 768, 1024, 1200, 1440 e 1920 px), cobrindo as 5 faixas da apostila. Resultado: **sem rolagem horizontal** e **alvos de toque ≥ 44 px** nas páginas públicas e nas 10 telas autenticadas (320, 768 e 1440 px, com o Supabase real). Detalhes e capturas: [relatório de testes](relatorio-testes.md#5-interface-responsividade-e-acessibilidade-testse2epublicspects).
 
 | Faixa (apostila) | Layout implementado |
 |---|---|
@@ -38,7 +38,7 @@ Executados com Playwright em 8 larguras (320, 375, 480, 768, 1024, 1200, 1440 e 
 
 ## 3. Validação de acessibilidade
 
-axe-core (0 violações nos temas claro e escuro) e Lighthouse (Acessibilidade 100). Itens manuais e pendências: [relatório de acessibilidade](relatorio-acessibilidade.md).
+axe-core (0 violações nas páginas públicas, nos temas claro e escuro, e nas 10 telas autenticadas) e Lighthouse (Acessibilidade 100). Itens manuais e pendências: [relatório de acessibilidade](relatorio-acessibilidade.md).
 
 ## 4. Testes de usabilidade com usuários
 

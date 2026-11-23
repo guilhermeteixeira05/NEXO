@@ -31,7 +31,7 @@ Os contratos são **tipos e funções exportadas**. Quem consome um contrato nã
 | Propostas | Integrante 4 | 1 | `PlanCard` (componente), `approvePlanAction(planId)`, `rejectPlanAction(planId)` |
 | Indicadores e sinais | Integrante 5 | 1, 4 | `computeMetrics(...)`, `computeSignals(...)`, `getBriefing(...)` |
 | Dados compartilhados | Integrante 1 | 1, 4, 5 | `loadUserSnapshot()` → `UserSnapshot` (`src/lib/snapshot.ts`) |
-| Componentes de UI | Integrante 1 | Todos | `Icon`, `Dialog`, `TextField`, `SelectField`, `SubmitButton`, `useToast`, `PageHeader`, `Notice`... |
+| Componentes de UI | Integrante 1 | Todos | `Icon`, `Dialog`, `TextField`, `SelectField`, `SubmitButton`, `useActionForm`, `useToast`, `PageHeader`, `Notice`... |
 
 ## Regras de integração
 

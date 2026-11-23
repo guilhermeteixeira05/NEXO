@@ -16,7 +16,7 @@ flowchart LR
         AI["Integração IA<br/>contexto · ferramentas · validação"]
     end
     SB[("Supabase<br/>Auth + PostgreSQL com RLS")]
-    CL["API Anthropic<br/>(Claude)"]
+    CL["API Google Gemini<br/>(ou Anthropic Claude)"]
     BR["BrasilAPI<br/>feriados"]
 
     UI --> PX --> RSC
@@ -36,7 +36,7 @@ flowchart LR
 - **Interface** (`src/app`, `src/components`): telas e componentes. Não acessa o banco nem a IA diretamente.
 - **Regras de negócio** (`src/lib/tasks/rules.ts`, `src/lib/planning/scheduler.ts`, `src/lib/insights/*.ts`, `src/lib/ai/proposals.ts`): funções **puras**, sem acesso a rede, cobertas por testes unitários.
 - **Persistência** (`src/lib/*/queries.ts`, `src/lib/*/actions.ts`, `supabase/migrations`): consultas e Server Actions sobre o Supabase. O isolamento entre usuários é garantido pelo **Row Level Security**.
-- **Serviços externos** (`src/lib/holidays/brasilapi.ts`, `src/lib/ai/client.ts`): BrasilAPI e Anthropic, com tempo limite e tratamento de erros.
+- **Serviços externos** (`src/lib/holidays/brasilapi.ts`, `src/lib/ai/gemini.ts`, `src/lib/ai/client.ts`): BrasilAPI e provedor de IA (Gemini ou Claude), com tempo limite e tratamento de erros.
 - **Integração com IA** (`src/lib/ai/*`): monta o contexto autorizado, define as ferramentas e valida tudo o que a IA propõe antes de gravar.
 
 ## 2. Tecnologias
@@ -48,7 +48,8 @@ flowchart LR
 | Linguagem | TypeScript (strict) | 5.9 | Contratos entre módulos e menos erros em equipe |
 | Estilos | CSS puro com variáveis, Grid, Flexbox e media queries | — | Demonstra os conceitos da apostila sem framework extra |
 | Banco e autenticação | Supabase (PostgreSQL + Auth) — `@supabase/ssr`, `@supabase/supabase-js` | 0.12.7 / 2.119.2 | Banco relacional gerenciado, autenticação pronta e RLS |
-| IA | API Anthropic (Claude) — `@anthropic-ai/sdk` | 1.12.0 | Chamadas pelo servidor, ferramentas e saída estruturada |
+| IA (padrão, gratuita) | API Google Gemini — `@google/genai` | 2.32.0 (fixa) | Nível gratuito; chamadas pelo servidor, chamada de funções e saída JSON com esquema |
+| IA (alternativa paga) | API Anthropic (Claude) — `@anthropic-ai/sdk` | 1.12.0 | Mesmos recursos com o Claude, ativado por `ANTHROPIC_API_KEY` |
 | Validação | Zod | 4.6.7 | Mesmos esquemas para formulários e respostas da IA |
 | API pública | BrasilAPI — feriados nacionais | v1 | Gratuita, sem chave, dados brasileiros |
 | Testes | Vitest, PGlite, Playwright, axe-core, Lighthouse | 4.1 / 0.5 / 1.65 / 4.14 / 13.6 | Unitários, banco real (RLS), E2E, acessibilidade e desempenho |
@@ -62,7 +63,8 @@ Versões conferidas no registro npm em 23/11/2026. **Não foram adicionadas** bi
 2. **CSS sem framework**: os tokens de cor e espaçamento são variáveis CSS idênticas às variáveis do Figma; os breakpoints são exatamente os da apostila (`481`, `769`, `1025`, `1201` px, com `min-width`).
 3. **Planejador local + IA**: o encaixe de horários é um algoritmo determinístico e testado. A IA revisa o rascunho, sugere melhorias e conversa, mas toda saída dela é validada e só vira **proposta**. Assim o planejamento funciona mesmo sem a IA, e a IA nunca grava dados inválidos.
 4. **Aprovação transacional no banco**: `public.approve_plan()` (PL/pgSQL, `security invoker`) aplica todos os itens de uma proposta numa única transação, respeitando o RLS.
-5. **Modelo de IA configurável** por `ANTHROPIC_MODEL` (padrão `claude-haiku-5-5`, escolhido pelo grupo por custo e velocidade; `claude-opus-5-5` pode ser usado para respostas mais elaboradas).
+5. **Provedor de IA configurável**: o padrão é o **Google Gemini** (`gemini-3.5-flash-lite`), porque tem nível gratuito e o trabalho não deve gerar custos. O Claude continua disponível (`ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, `AI_PROVIDER`). Os dois usam o mesmo prompt, as mesmas ferramentas e a mesma validação; só o adaptador muda (`src/lib/ai/gemini.ts` para o Gemini). O SDK `@google/genai` está fixado na 2.32.0: em 23/11/2026, a série 3.x tinha menos de uma semana de publicação.
+6. **Formulários que não perdem dados**: no React 19, um `<form action>` é limpo depois de cada envio, mesmo com erro. O hook `useActionForm` (`src/components/ui/useActionForm.ts`) envia por `onSubmit` com `useActionState`, mantendo o que o usuário digitou quando o servidor recusa os dados.
 
 ## 3. Estrutura de pastas
 
@@ -150,7 +152,8 @@ erDiagram
 |---|---|
 | Usuário acessar dados de outro | RLS em **todas** as tabelas; chaves estrangeiras também conferidas contra o dono; **testado** em `tests/db/schema-rls.test.ts` |
 | Visitante sem login | O papel `anon` não tem permissão em nenhuma tabela; o proxy redireciona as rotas protegidas; `requireUser()` em toda página e ação |
-| Chave da IA exposta | `ANTHROPIC_API_KEY` só existe no servidor (sem prefixo `NEXT_PUBLIC_`) e o cliente é criado em módulo `server-only` |
+| Chave da IA exposta | `GEMINI_API_KEY` e `ANTHROPIC_API_KEY` só existem no servidor (sem prefixo `NEXT_PUBLIC_`) e os clientes são criados em módulos `server-only` |
+| Uso dos dados pelo provedor de IA | No nível gratuito do Gemini, o Google pode usar o conteúdo enviado para melhorar seus produtos, inclusive com revisão humana. A tela Configurações avisa o usuário, o contexto exclui e-mail, senha e IDs, e a orientação é não inserir dados sensíveis. Para dados reais, use um plano pago e confira os termos do provedor |
 | IA gravando dados indevidos | A IA só **propõe**; `validateProposal` confere posse, datas, horários e conflitos; a aprovação revalida no banco |
 | Links maliciosos vindos da IA | `isAllowedActionHref` aceita apenas rotas internas conhecidas; a coluna `notifications.link` exige `/…` |
 | Redirecionamento aberto | O parâmetro `next`/`proxima` só aceita caminhos internos |
@@ -163,14 +166,14 @@ erDiagram
 
 | Recurso | Arquivo | Como funciona |
 |---|---|---|
-| Chat | `src/app/api/assistente/route.ts`, `src/lib/ai/chat.ts` | Envia o prompt de sistema (em cache), o contexto do usuário e as últimas 20 mensagens; laço de até 5 rodadas de ferramentas |
+| Chat | `src/app/api/assistente/route.ts`, `src/lib/ai/chat.ts`, `src/lib/ai/gemini.ts` | Envia o prompt de sistema, o contexto do usuário e as últimas 20 mensagens; laço de até 5 rodadas de ferramentas (Gemini: `functionDeclarations`, preservando o turno do modelo; Claude: `tools`, com o prompt em cache) |
 | Ferramenta `consultar_planejador` | `chat.ts` | Somente leitura: devolve horários livres, compromissos e o rascunho do planejador local |
 | Ferramenta `propor_alteracoes` | `chat.ts`, `proposals.ts` | Cria uma **proposta** (`plans` + `plan_items`) depois da validação; com erro, devolve a mensagem para a IA corrigir |
 | Briefing proativo | `src/lib/insights/service.ts`, `structured.ts` | Sinais por regras → texto personalizado pela IA (JSON validado); no máximo uma vez por dia |
 | Revisão do plano | `src/lib/planning/service.ts` | A IA reordena os blocos e escreve observações; os blocos passam por `validateBlocks` |
 | Resumo semanal | `src/lib/insights/service.ts` | Métricas reais → resumo, destaques e sugestões (JSON validado) |
 
-Sem `ANTHROPIC_API_KEY`, o chat mostra que a IA não está configurada e **não simula respostas**. O briefing, o planejamento e o resumo usam as regras locais e são identificados como "regras".
+Sem chave de IA (`GEMINI_API_KEY` ou `ANTHROPIC_API_KEY`), o chat mostra que a IA não está configurada e **não simula respostas**. O briefing, o planejamento e o resumo usam as regras locais e são identificados como "regras".
 
 ## 7. API pública — BrasilAPI (RF45)
 
