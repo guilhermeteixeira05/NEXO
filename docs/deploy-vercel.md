@@ -14,7 +14,7 @@
 
 ## 2. IA — Google Gemini (gratuita)
 
-1. Acesse <https://aistudio.google.com/apikey> com uma conta Google e clique em **Create API key** (Criar chave de API). O nível gratuito não pede cartão.
+1. Acesse <https://aistudio.google.com/apikey> com uma conta Google e clique em **Create API key** (Criar chave de API). O nível gratuito não pede cartão. Se a lista de projetos mostrar "No Cloud Projects Available", crie antes um projeto (ex.: `NEXO`) e selecione-o. Não ative o faturamento.
 2. Copie a chave e guarde-a somente no `.env.local` e nas variáveis de ambiente da Vercel.
 3. **Privacidade:** no nível gratuito, o Google pode usar o conteúdo enviado para melhorar seus produtos, inclusive com revisão humana. Use dados de teste, não informações sensíveis. O NEXO mostra esse aviso em **Configurações**.
 

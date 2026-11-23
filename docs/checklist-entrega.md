@@ -34,8 +34,9 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 - [x] Criar o projeto Supabase e aplicar a migração.
 - [x] Configurar o Supabase no `.env.local`.
 - [x] Rodar a suíte autenticada (`E2E_SUPABASE=1 npx playwright test tests/e2e/app.spec.ts`): 7 de 7 aprovados em 23/11/2026 ([relatório de testes](relatorio-testes.md)).
-- [ ] Gerar a chave gratuita do Gemini em <https://aistudio.google.com/apikey> e colocá-la no `.env.local` como `GEMINI_API_KEY`.
-- [ ] Com a chave, rodar de novo a suíte autenticada para validar o chat com resposta real da IA.
+- [x] Gerar a chave gratuita do Gemini e colocá-la no `.env.local` (`GEMINI_API_KEY`).
+- [x] Rodar de novo a suíte autenticada com a IA real: 7 de 7 aprovados.
+- [ ] Cadastrar a `GEMINI_API_KEY` também nas variáveis de ambiente da Vercel.
 - [ ] Excluir as contas de teste `nexo.e2e.…@teste.dev` em Supabase → Authentication → Users (opcional).
 - [ ] Criar o repositório no GitHub, enviar `main` e `develop` e convidar os 4 colegas.
 - [ ] Cada integrante fazer commits reais na sua `feature/*` (a rubrica avalia a colaboração no histórico).

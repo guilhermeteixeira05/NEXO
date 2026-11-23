@@ -17,7 +17,7 @@
 | Desempenho, acessibilidade, boas práticas e SEO | Lighthouse 13.6 | ver seção 6 | ✅ A11y 100 · BP 100 · SEO 100 · Desempenho 87–100 |
 | Fluxos autenticados de ponta a ponta | Playwright (`tests/e2e/app.spec.ts`) + Supabase real | `E2E_SUPABASE=1 npx playwright test tests/e2e/app.spec.ts` | ✅ 7 testes (ver seção 5.1) |
 | Acessibilidade das telas autenticadas | axe-core 4.14 | (mesmo comando acima) | ✅ 0 violações nas 10 telas |
-| Chat com resposta real da IA | Playwright + API Gemini | (mesmo comando acima) | ⏳ **Pendente**: requer `GEMINI_API_KEY`. Sem a chave, o teste confirma o aviso "IA não configurada" |
+| Chat com resposta real da IA | Playwright + API Gemini (`gemini-3.5-flash-lite`, nível gratuito) | (mesmo comando acima) | ✅ A IA respondeu citando a atividade pendente "Estudar inglês", lida do banco |
 | WAVE | Extensão WebAIM | manual | ⏳ **Pendente** |
 | Testes com usuários | Roteiro em [relatório de usabilidade](relatorio-usabilidade.md#3-roteiro-de-teste-de-usabilidade-com-usuários) | presencial | ⏳ **Pendente**: requer participantes reais |
 
@@ -87,7 +87,7 @@ Capturas de tela: `docs/relatorios/capturas/`. Relatórios do axe: `docs/relator
 
 ## 5.1 Fluxos com login no Supabase real (`tests/e2e/app.spec.ts`)
 
-Executado em 23/11/2026 contra o projeto Supabase do grupo (migração aplicada, confirmação de e-mail desligada), servidor de produção e Google Chrome. **7 de 7 aprovados**, em duas execuções seguidas.
+Executado em 23/11/2026 contra o projeto Supabase do grupo (migração aplicada, confirmação de e-mail desligada), servidor de produção e Google Chrome. **7 de 7 aprovados** em três execuções: duas sem chave de IA e uma com a `GEMINI_API_KEY` (IA real).
 
 | Teste | O que faz | Resultado |
 |---|---|---|
@@ -96,10 +96,12 @@ Executado em 23/11/2026 contra o projeto Supabase do grupo (migração aplicada,
 | Planejamento (RF26, RF24) | Gera o plano semanal e o aprova quando há itens a aprovar | ✅ |
 | Lembretes (RF33, RF38) | Cria um lembrete diário | ✅ |
 | Calendário (RF45) | Dezembro de 2026 mostra "Feriado nacional: Natal" vindo da BrasilAPI | ✅ |
-| Assistente (RF19) | Sem `GEMINI_API_KEY`, confirma o aviso "IA não configurada" (nenhuma resposta simulada) | ✅ (resposta real pendente) |
+| Assistente (RF19) | Pergunta "Quais tarefas ainda preciso concluir?" e espera a resposta real do Gemini citar "Estudar inglês". Sem chave, o mesmo teste confirma o aviso "IA não configurada" (nenhuma resposta simulada) | ✅ com a IA real |
 | Responsividade e acessibilidade | 10 telas em 320, 768 e 1440 px: sem rolagem horizontal, alvos ≥ 44 px no celular e no tablet, axe sem violações | ✅ |
 
 Cada execução cria uma conta `nexo.e2e.<timestamp>@teste.dev` no projeto. Essas contas podem ser excluídas em **Authentication → Users**.
+
+**Observação da execução com IA real:** na revisão do plano, o Gemini respondeu uma vez `503 UNAVAILABLE` (alta demanda). O NEXO registrou o erro e entregou o plano das regras locais, identificado como tal, sem travar a tela. Falhas temporárias assim são comuns no nível gratuito.
 
 **Defeitos encontrados por esta suíte e corrigidos:**
 
@@ -133,7 +135,7 @@ A meta do RNF08 (Desempenho ≥ 80) foi atingida. Execução local, sem CDN; os 
 | Perfil e preferências | Gatilho e RLS do perfil; telas de Perfil e Configurações (responsividade e axe) | Editar preferências pela tela |
 | Tarefas e objetivos | Regras, recorrência, restrições SQL, RLS; criar, concluir e adiar no Supabase, com persistência | Editar e excluir pela tela; objetivos pela tela |
 | Disponibilidade | Uso no planejador; cadastro na configuração inicial | — |
-| Chat com IA | Validação de propostas; contexto; rota 401; integração com o Gemini (unitário); aviso "IA não configurada" | Respostas reais (requer `GEMINI_API_KEY`) |
+| Chat com IA | Validação de propostas; contexto; rota 401; integração com o Gemini (unitário); resposta real do Gemini com os dados do usuário; aviso "IA não configurada" | Proposta de reorganização feita pelo chat |
 | Planejamento diário | Planejador, conflitos, validação de blocos; plano semanal gerado no Supabase | — |
 | Reorganização / aprovação | `approve_plan` transacional no PostgreSQL; aprovação pela tela | Proposta criada pela IA |
 | Lembretes | Criação de lembrete diário pela tela | Notificação disparada no horário |
