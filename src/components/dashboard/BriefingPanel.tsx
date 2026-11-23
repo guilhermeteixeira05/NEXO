@@ -3,7 +3,35 @@ import { ActionButton } from "@/components/ui/ActionButton";
 import { Icon } from "@/components/ui/Icon";
 import { SectionTitle } from "@/components/ui/Misc";
 import { refreshBriefingAction } from "@/lib/insights/actions";
-import type { Briefing } from "@/lib/insights/service";
+import { getBriefing, type Briefing } from "@/lib/insights/service";
+import type { UserSnapshot } from "@/lib/snapshot";
+import type { ServerSupabase } from "@/lib/supabase/server";
+
+/**
+ * Busca o briefing (que pode chamar a IA) dentro de um <Suspense> no Painel:
+ * o restante da tela aparece na hora e as sugestões entram quando ficam prontas.
+ */
+export async function BriefingSection({ supabase, snapshot }: { supabase: ServerSupabase; snapshot: UserSnapshot }) {
+  const briefing = await getBriefing(supabase, snapshot);
+  return <BriefingPanel briefing={briefing} />;
+}
+
+/** Espaço reservado enquanto o briefing é gerado (mesma estrutura, sem deslocar o layout). */
+export function BriefingSkeleton() {
+  return (
+    <section aria-labelledby="titulo-briefing" className="stack" aria-busy="true">
+      <SectionTitle id="titulo-briefing" title="O NEXO sugere" />
+      <div className="brief" role="status">
+        <span className="brief__icon">
+          <Icon name="assistente" size={20} />
+        </span>
+        <div className="brief__body">
+          <p className="muted">O NEXO está analisando sua rotina…</p>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 /** Assistente proativo no Painel (RF25). Indica se o texto veio da IA ou das regras locais. */
 export function BriefingPanel({ briefing }: { briefing: Briefing | null }) {

@@ -8,6 +8,11 @@
   box-sizing: border-box;
 }
 
+/* O atributo hidden sempre esconde, mesmo quando uma classe define display (ex.: .form { display: flex }) */
+[hidden] {
+  display: none !important;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
