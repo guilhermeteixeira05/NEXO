@@ -46,4 +46,4 @@ axe-core (0 violações nas páginas públicas, nos temas claro e escuro, e nas 
 
 ## 5. Publicação oficial
 
-O projeto está pronto para a Vercel (build aprovado, variáveis documentadas). A publicação depende das contas do grupo; o passo a passo está em [deploy-vercel.md](deploy-vercel.md). Após publicar, registre o endereço no [README](../README.md#aplicação-publicada) e no [checklist](checklist-entrega.md).
+Publicada na Vercel em 23/11/2026: **<https://nexo-a3.vercel.app>**, conectada ao repositório do GitHub (cada envio para a `main` publica de novo). Os 35 testes das páginas públicas foram aprovados também contra o site publicado, e o Lighthouse deu Acessibilidade, Boas práticas e SEO 100 ([relatório de testes](relatorio-testes.md#61-lighthouse-no-site-publicado-vercel)). Passo a passo: [deploy-vercel.md](deploy-vercel.md).

@@ -47,7 +47,11 @@ npm run dev                    # http://localhost:3000
 5. Teste em produção: cadastro → configuração inicial → nova atividade → Assistente → Planejamento → Calendário (feriados).
 6. Rode o Lighthouse e o WAVE na URL pública e anote os resultados nos relatórios.
 
+> **Na tela nova de importação da Vercel** ("Novo Projeto" → "Integrações opcionais" → "Implantar"), não aparece o campo de variáveis. Nesse caso, cadastre-as antes em **Settings → Environment Variables** do projeto já criado e só depois clique em **Implantar**. Não use a integração "Supabase" sugerida pela Vercel: o NEXO usa as variáveis acima, com o projeto Supabase já existente.
+
 Também é possível publicar pela CLI: `npx vercel` (login com a conta do grupo) e depois `npx vercel --prod`.
+
+Publicação atual: <https://nexo-a3.vercel.app>. Para testar as páginas públicas no site publicado: `E2E_BASE_URL=https://nexo-a3.vercel.app npx playwright test tests/e2e/public.spec.ts`.
 
 ## 5. Verificações após o deploy
 

@@ -12,7 +12,7 @@ O **NEXO** é um assistente pessoal com inteligência artificial que organiza ta
 |---|---|
 | **Repositório** | <https://github.com/guilhermeteixeira05/NEXO> |
 | **Figma** | <https://www.figma.com/design/9hzmKgGYbPMaTvYTgbRyRn> ([organização do arquivo](docs/figma.md)) |
-| **Aplicação publicada** | _pendente — preencher após o deploy na Vercel_ ([como publicar](docs/deploy-vercel.md)) |
+| **Aplicação publicada** | <https://nexo-a3.vercel.app> (Vercel) |
 | **Documentação** | [docs/](docs/README.md) |
 
 ## Sumário
@@ -145,7 +145,7 @@ Resultados de 23/11/2026: **117 testes automatizados aprovados** (75 Vitest, 35 
 
 Vercel + Supabase. Importe o repositório em <https://vercel.com/new>, cadastre as variáveis de ambiente e faça o deploy. Guia: [docs/deploy-vercel.md](docs/deploy-vercel.md).
 
-<a id="aplicação-publicada"></a>**Aplicação publicada:** _pendente_.
+<a id="aplicação-publicada"></a>**Aplicação publicada:** <https://nexo-a3.vercel.app>. Os testes das páginas públicas também rodam contra o site publicado: `E2E_BASE_URL=https://nexo-a3.vercel.app npx playwright test tests/e2e/public.spec.ts`.
 
 ## Equipe e colaboração
 
