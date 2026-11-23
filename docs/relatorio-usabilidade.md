@@ -94,7 +94,7 @@
 | Sem rolagem horizontal de 320 a 1920 px (8 larguras) | Playwright (`tests/e2e/public.spec.ts`) | Aprovado nas páginas públicas |
 | Sem rolagem horizontal nas 10 telas autenticadas (320, 768 e 1440 px) | Playwright (`tests/e2e/app.spec.ts`) + Supabase real | Aprovado |
 | Alvos de toque ≥ 44 × 44 px no celular e no tablet | Playwright | Aprovado nas páginas públicas (falha inicial no logotipo, com 36 px, corrigida) e nas telas autenticadas (campo de data de "Adiar", com 40 px, corrigido) |
-| Fluxos principais com login: cadastro, configuração inicial, criar/concluir/adiar, plano, lembrete, feriados | Playwright + Supabase real | Aprovado (7 de 7); dois defeitos de formulário encontrados e corrigidos (ver H5 e H9) |
+| Fluxos principais com login: cadastro, configuração inicial, criar/concluir/adiar, plano, lembrete, feriados e chat com a IA real | Playwright + Supabase real | Aprovado (7 de 7); dois defeitos de formulário encontrados e corrigidos (ver H5 e H9) |
 | Zoom de texto a 200% sem rolagem horizontal | Playwright | Aprovado |
 | Lighthouse: Acessibilidade / Boas práticas / SEO | Lighthouse 13.6 | 100 / 100 / 100 (celular e desktop) |
 

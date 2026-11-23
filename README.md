@@ -138,7 +138,7 @@ Fluxos com login (Supabase real configurado no `.env.local`, confirmação de e-
 E2E_SUPABASE=1 npx playwright test tests/e2e/app.spec.ts    # PowerShell: $env:E2E_SUPABASE=1; npx playwright test tests/e2e/app.spec.ts
 ```
 
-Resultados de 23/11/2026: **112 testes automatizados aprovados** (70 Vitest, 35 Playwright nas páginas públicas e 7 fluxos com login no Supabase real); axe com 0 violações WCAG 2.1 AA nas 3 páginas públicas e nas 10 telas autenticadas; Lighthouse com Acessibilidade, Boas práticas e SEO em 100. Ainda pendentes: o chat com resposta real da IA (depende da `GEMINI_API_KEY`), o WAVE e os testes com usuários. Relatório completo: [docs/relatorio-testes.md](docs/relatorio-testes.md).
+Resultados de 23/11/2026: **112 testes automatizados aprovados** (70 Vitest, 35 Playwright nas páginas públicas e 7 fluxos com login no Supabase real, incluindo o chat com resposta real do Gemini); axe com 0 violações WCAG 2.1 AA nas 3 páginas públicas e nas 10 telas autenticadas; Lighthouse com Acessibilidade, Boas práticas e SEO em 100. Ainda pendentes: o WAVE e os testes com usuários. Relatório completo: [docs/relatorio-testes.md](docs/relatorio-testes.md).
 
 ## Publicação
 
