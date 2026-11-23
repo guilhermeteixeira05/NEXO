@@ -44,7 +44,7 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 - [x] Publicar na Vercel (<https://nexo-a3.vercel.app>) e conferir as verificações pós-deploy.
 - [x] Rodar o Lighthouse na URL pública.
 - [ ] Rodar o WAVE na URL pública.
-- [ ] Entrar no site publicado com uma conta e testar Painel, Assistente e Planejamento.
+- [x] Entrar no site publicado com uma conta e usar o Painel e o Assistente (conferido manualmente pelo grupo em 23/11/2026).
 - [ ] Realizar os testes de usabilidade com 5 participantes e preencher a tabela.
 - [ ] Compartilhar o Figma (Share → "Anyone with the link can view").
 - [ ] Gravar o vídeo (máx. 10 min).
