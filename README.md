@@ -10,6 +10,7 @@ O **NEXO** é um assistente pessoal com inteligência artificial que organiza ta
 
 | | |
 |---|---|
+| **Repositório** | <https://github.com/guilhermeteixeira05/NEXO> |
 | **Figma** | <https://www.figma.com/design/9hzmKgGYbPMaTvYTgbRyRn> ([organização do arquivo](docs/figma.md)) |
 | **Aplicação publicada** | _pendente — preencher após o deploy na Vercel_ ([como publicar](docs/deploy-vercel.md)) |
 | **Documentação** | [docs/](docs/README.md) |
@@ -76,8 +77,8 @@ Interface, regras de negócio, persistência, serviços externos e integração 
 **Requisitos:** Node.js 20.9 ou mais recente (testado no 26.13), npm, Git; conta gratuita no Supabase; chave gratuita da API Gemini, gerada no Google AI Studio (para a IA).
 
 ```bash
-git clone https://github.com/SEU-USUARIO/nexo.git
-cd nexo
+git clone https://github.com/guilhermeteixeira05/NEXO.git
+cd NEXO
 npm install
 cp .env.example .env.local      # PowerShell: Copy-Item .env.example .env.local
 # preencha o .env.local (veja abaixo)

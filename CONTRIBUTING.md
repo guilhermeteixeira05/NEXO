@@ -62,16 +62,17 @@ git config user.email "seu-email-do-github@exemplo.com"
 
 ## Publicar o repositório no GitHub
 
-O repositório local já tem histórico e branches. Para criar o remoto (uma vez, por quem for o dono):
-
-1. Em <https://github.com/new>, crie o repositório `nexo` **vazio** (sem README nem .gitignore).
-2. No terminal, na pasta do projeto:
+O repositório oficial é <https://github.com/guilhermeteixeira05/NEXO>, com `main`, `develop` e as 5 branches `feature/*`. Cada integrante clona e trabalha na sua branch:
 
 ```bash
-git remote add origin https://github.com/SEU-USUARIO/nexo.git
-git push -u origin main
-git push origin develop feature/interface feature/usuarios feature/tarefas feature/ia feature/lembretes
+git clone https://github.com/guilhermeteixeira05/NEXO.git
+cd NEXO
+git switch feature/SUA-FRENTE      # ex.: feature/tarefas
 ```
 
-3. Em **Settings → Collaborators**, convide os 4 colegas.
-4. Recomendado: em **Settings → Branches**, proteja `main` e `develop` (exigir Pull Request e 1 aprovação).
+No primeiro `git push`, o Git Credential Manager abre a janela "Connect to GitHub": clique em **Sign in with your browser**, entre na sua conta e clique em **Authorize git-ecosystem**.
+
+Configuração do repositório (feita pelo dono):
+
+1. Em **Settings → Collaborators**, convide os 4 colegas (cada um aceita o convite recebido por e-mail).
+2. Recomendado: em **Settings → Branches**, proteja `main` e `develop` (exigir Pull Request e 1 aprovação).

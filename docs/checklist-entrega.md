@@ -7,7 +7,7 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 | Item | Situação | Observação |
 |---|---|---|
 | Aplicação hospedada e funcional (Vercel/Netlify) | ⏳ | Build aprovado; publicar conforme [deploy-vercel.md](deploy-vercel.md) e colar a URL no README |
-| Repositório Git versionado, README, instruções e histórico de commits | ✅ local / ⏳ GitHub | Repositório local com branches e commits por funcionalidade; criar o remoto e enviar ([CONTRIBUTING.md](../CONTRIBUTING.md)) |
+| Repositório Git versionado, README, instruções e histórico de commits | ✅ | <https://github.com/guilhermeteixeira05/NEXO>, com `main`, `develop`, 5 branches `feature/*` e commits por funcionalidade ([CONTRIBUTING.md](../CONTRIBUTING.md)) |
 | Vídeo de até 10 min (problema, solução, arquitetura, heurísticas) | ⏳ | Roteiro pronto: [roteiro-video.md](roteiro-video.md) |
 
 ## Critérios mínimos de qualidade (seção 1.3)
@@ -38,7 +38,8 @@ Legenda: ✅ pronto · ⏳ depende do grupo · ❌ não feito
 - [x] Rodar de novo a suíte autenticada com a IA real: 7 de 7 aprovados.
 - [ ] Cadastrar a `GEMINI_API_KEY` também nas variáveis de ambiente da Vercel.
 - [ ] Excluir as contas de teste `nexo.e2e.…@teste.dev` em Supabase → Authentication → Users (opcional).
-- [ ] Criar o repositório no GitHub, enviar `main` e `develop` e convidar os 4 colegas.
+- [x] Criar o repositório no GitHub e enviar todas as branches.
+- [ ] Convidar os 4 colegas no GitHub (Settings → Collaborators).
 - [ ] Cada integrante fazer commits reais na sua `feature/*` (a rubrica avalia a colaboração no histórico).
 - [ ] Publicar na Vercel e conferir as verificações pós-deploy.
 - [ ] Rodar WAVE e Lighthouse na URL pública.
