@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState, useTransition } from "react";
+import { useActionForm } from "@/components/ui/useActionForm";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { AvailabilityEditor, type Slot } from "@/components/profile/AvailabilityEditor";
 import { FormAlert, SelectField, SwitchField, TextField } from "@/components/ui/Field";
 import { Icon } from "@/components/ui/Icon";
@@ -17,10 +18,10 @@ import {
 import { FOCUS_LABELS, FOCUS_PERIODS, initialActionState, type Profile, type ThemePreference } from "@/lib/types";
 
 export function ProfileForm({ profile, email }: { profile: Profile; email: string }) {
-  const [state, action] = useActionState(updateProfileAction, initialActionState);
+  const { state, pending, onSubmit } = useActionForm(updateProfileAction, initialActionState);
   const e = state.fieldErrors ?? {};
   return (
-    <form action={action} className="form" noValidate aria-labelledby="titulo-dados">
+    <form onSubmit={onSubmit} className="form" noValidate aria-labelledby="titulo-dados">
       <h2 id="titulo-dados" style={{ fontSize: "var(--text-lg)" }}>
         Dados pessoais
       </h2>
@@ -42,17 +43,17 @@ export function ProfileForm({ profile, email }: { profile: Profile; email: strin
         />
       </div>
       <div className="actions actions--end">
-        <SubmitButton>Salvar dados</SubmitButton>
+        <SubmitButton pending={pending}>Salvar dados</SubmitButton>
       </div>
     </form>
   );
 }
 
 export function PreferencesForm({ profile }: { profile: Profile }) {
-  const [state, action] = useActionState(updatePreferencesAction, initialActionState);
+  const { state, pending, onSubmit } = useActionForm(updatePreferencesAction, initialActionState);
   const e = state.fieldErrors ?? {};
   return (
-    <form action={action} className="form" noValidate aria-labelledby="titulo-preferencias">
+    <form onSubmit={onSubmit} className="form" noValidate aria-labelledby="titulo-preferencias">
       <h2 id="titulo-preferencias" style={{ fontSize: "var(--text-lg)" }}>
         Preferências
       </h2>
@@ -71,16 +72,16 @@ export function PreferencesForm({ profile }: { profile: Profile }) {
       </div>
       <SwitchField label="Assistente proativo" name="proactiveEnabled" defaultChecked={profile.proactive_enabled} description="Alertas e recomendações no Painel." />
       <div className="actions actions--end">
-        <SubmitButton>Salvar preferências</SubmitButton>
+        <SubmitButton pending={pending}>Salvar preferências</SubmitButton>
       </div>
     </form>
   );
 }
 
 export function AvailabilityForm({ initial }: { initial: Slot[] }) {
-  const [state, action] = useActionState(saveAvailabilityAction, initialActionState);
+  const { state, pending, onSubmit } = useActionForm(saveAvailabilityAction, initialActionState);
   return (
-    <form action={action} className="form" noValidate aria-labelledby="titulo-disp">
+    <form onSubmit={onSubmit} className="form" noValidate aria-labelledby="titulo-disp">
       <h2 id="titulo-disp" style={{ fontSize: "var(--text-lg)" }}>
         Disponibilidade semanal
       </h2>
@@ -88,7 +89,7 @@ export function AvailabilityForm({ initial }: { initial: Slot[] }) {
       <FormAlert message={state.message} ok={state.ok} />
       <AvailabilityEditor initial={initial} />
       <div className="actions actions--end">
-        <SubmitButton>Salvar disponibilidade</SubmitButton>
+        <SubmitButton pending={pending}>Salvar disponibilidade</SubmitButton>
       </div>
     </form>
   );
@@ -150,14 +151,14 @@ export function ProactiveSwitch({ enabled }: { enabled: boolean }) {
 }
 
 export function PasswordForm() {
-  const [state, action] = useActionState(changePasswordAction, initialActionState);
+  const { state, pending, onSubmit } = useActionForm(changePasswordAction, initialActionState);
   const formRef = useRef<HTMLFormElement>(null);
   const e = state.fieldErrors ?? {};
   useEffect(() => {
     if (state.ok) formRef.current?.reset(); // limpa os campos de senha após sucesso
   }, [state]);
   return (
-    <form ref={formRef} action={action} className="form" noValidate aria-labelledby="titulo-senha">
+    <form ref={formRef} onSubmit={onSubmit} className="form" noValidate aria-labelledby="titulo-senha">
       <h2 id="titulo-senha" style={{ fontSize: "var(--text-lg)" }}>
         Segurança
       </h2>
@@ -167,7 +168,7 @@ export function PasswordForm() {
         <TextField label="Confirmar nova senha" name="confirm" type="password" autoComplete="new-password" required errors={e.confirm} />
       </div>
       <div className="actions actions--end">
-        <SubmitButton variant="secondary">Alterar senha</SubmitButton>
+        <SubmitButton pending={pending} variant="secondary">Alterar senha</SubmitButton>
       </div>
     </form>
   );

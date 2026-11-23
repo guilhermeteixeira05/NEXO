@@ -10,14 +10,18 @@ export function SubmitButton({
   variant = "primary",
   block = false,
   className = "",
+  pending: pendingProp,
 }: {
   children: ReactNode;
   pendingText?: string;
   variant?: "primary" | "secondary" | "ghost" | "danger";
   block?: boolean;
   className?: string;
+  /** Estado de envio vindo de useActionForm (formulários enviados pelo onSubmit). */
+  pending?: boolean;
 }) {
-  const { pending } = useFormStatus();
+  const status = useFormStatus();
+  const pending = pendingProp ?? status.pending;
   return (
     <button
       type="submit"
