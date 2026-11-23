@@ -113,7 +113,7 @@ Nunca faça commit do `.env.local`. O `.env.example` não contém valores reais.
 
 ## Configuração da IA
 
-- **Padrão gratuito: Google Gemini.** Entre em <https://aistudio.google.com/apikey> com uma conta Google, clique em **Create API key** e defina `GEMINI_API_KEY` no `.env.local` (e na Vercel). O modelo padrão é `gemini-3.5-flash-lite`, do nível gratuito; outro modelo pode ser escolhido em `GEMINI_MODEL`. O nível gratuito tem limite de requisições por minuto e por dia: ao atingi-lo, o chat explica que é preciso aguardar.
+- **Padrão gratuito: Google Gemini.** Entre em <https://aistudio.google.com/apikey> com uma conta Google, clique em **Create API key** e defina `GEMINI_API_KEY` no `.env.local` (e na Vercel). O modelo padrão é `gemini-3.5-flash-lite`, do nível gratuito; outro modelo pode ser escolhido em `GEMINI_MODEL`. O nível gratuito tem limite de requisições por minuto e por dia: ao atingi-lo, o chat explica que é preciso aguardar. Falhas temporárias do Gemini (ex.: 503, "alta demanda") são repetidas automaticamente até 3 vezes.
 - **Privacidade no nível gratuito:** o Google pode usar o conteúdo enviado para melhorar seus produtos, inclusive com revisão humana. A tela **Configurações** avisa o usuário, e o contexto enviado nunca inclui e-mail, senha ou IDs. Use dados de teste, não informações sensíveis.
 - **Alternativa paga:** com `ANTHROPIC_API_KEY`, o NEXO usa o Claude (`ANTHROPIC_MODEL`, padrão `claude-haiku-5-5`). Se as duas chaves existirem, vale o Gemini, a menos que `AI_PROVIDER=anthropic`. Os dois provedores usam o mesmo prompt, as mesmas ferramentas e a mesma validação.
 - As chaves só são lidas no servidor (`src/lib/ai/gemini.ts` e `src/lib/ai/client.ts`). O navegador conversa com `/api/assistente`.
@@ -138,7 +138,7 @@ Fluxos com login (Supabase real configurado no `.env.local`, confirmação de e-
 E2E_SUPABASE=1 npx playwright test tests/e2e/app.spec.ts    # PowerShell: $env:E2E_SUPABASE=1; npx playwright test tests/e2e/app.spec.ts
 ```
 
-Resultados de 23/11/2026: **112 testes automatizados aprovados** (70 Vitest, 35 Playwright nas páginas públicas e 7 fluxos com login no Supabase real, incluindo o chat com resposta real do Gemini); axe com 0 violações WCAG 2.1 AA nas 3 páginas públicas e nas 10 telas autenticadas; Lighthouse com Acessibilidade, Boas práticas e SEO em 100. Ainda pendentes: o WAVE e os testes com usuários. Relatório completo: [docs/relatorio-testes.md](docs/relatorio-testes.md).
+Resultados de 23/11/2026: **117 testes automatizados aprovados** (75 Vitest, 35 Playwright nas páginas públicas e 7 fluxos com login no Supabase real, incluindo o chat com resposta real do Gemini); axe com 0 violações WCAG 2.1 AA nas 3 páginas públicas e nas 10 telas autenticadas; Lighthouse com Acessibilidade, Boas práticas e SEO em 100. Ainda pendentes: o WAVE e os testes com usuários. Relatório completo: [docs/relatorio-testes.md](docs/relatorio-testes.md).
 
 ## Publicação
 

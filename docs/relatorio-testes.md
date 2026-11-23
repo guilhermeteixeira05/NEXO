@@ -9,7 +9,7 @@
 | Verificação de tipos | TypeScript 5.9 (strict) | `npm run typecheck` | ✅ 0 erros |
 | Qualidade de código | ESLint 9 + regras do Next/React | `npm run lint` | ✅ 0 erros, 0 avisos (3 erros iniciais corrigidos) |
 | Build de produção | Next.js 16.4.6 | `npm run build` | ✅ 21 rotas + proxy |
-| Unitários (regras de negócio e integração com a IA) | Vitest 4.1 | `npm test` | ✅ 58 testes |
+| Unitários (regras de negócio e integração com a IA) | Vitest 4.1 | `npm test` | ✅ 63 testes |
 | Integração com API pública (real) | Vitest + BrasilAPI | `npm test` | ✅ 1 teste (feriados de 2026) |
 | Banco de dados (migração, RLS, transação) | Vitest + PGlite (PostgreSQL) | `npm test` | ✅ 11 testes |
 | Interface, navegação e responsividade | Playwright 1.65 + Chrome | `npm run test:e2e` | ✅ 35 testes nas páginas públicas |
@@ -21,7 +21,7 @@
 | WAVE | Extensão WebAIM | manual | ⏳ **Pendente** |
 | Testes com usuários | Roteiro em [relatório de usabilidade](relatorio-usabilidade.md#3-roteiro-de-teste-de-usabilidade-com-usuários) | presencial | ⏳ **Pendente**: requer participantes reais |
 
-**Total automatizado executado:** 112 testes aprovados (70 Vitest + 35 Playwright nas páginas públicas + 7 Playwright com login).
+**Total automatizado executado:** 117 testes aprovados (75 Vitest + 35 Playwright nas páginas públicas + 7 Playwright com login).
 
 ## 2. Testes unitários — regras de negócio (`tests/unit`)
 
@@ -34,6 +34,7 @@
 | `insights.test.ts` | Indicadores do período, taxa de conclusão, dia mais produtivo, período de pico, mais adiadas, sugestões; sinais proativos e bloqueio de links externos | RF25, RF39–RF44 |
 | `validation-and-holidays.test.ts` | Esquemas de formulário (compromisso, campos vazios, campo ausente, recorrência, cadastro); parsing da BrasilAPI e tratamento de 404, falha de rede e ano inválido | RF01, RF09, RF45, RNF09 |
 | `ai-gemini.test.ts` | Integração com o Gemini, com o SDK `@google/genai` trocado por um dublê de teste (sem rede): escolha do provedor, conversão do histórico, laço de ferramentas (id e nome na resposta da função, turno do modelo preservado com `thoughtSignature`), erro devolvido à IA, bloqueio de segurança e limite de tokens, saída JSON validada pelo esquema, mensagens para 429 e 403 | RF19–RF23, RNF09 |
+| `ai-gemini-retry.test.ts` | Novas tentativas com o SDK `@google/genai` real e uma função `fetch` de teste (sem rede): 503, 503 e sucesso → resposta na 3ª tentativa; desiste após 3 tentativas mantendo o status do erro; 429 e 400 não são repetidos | RNF09 |
 
 **Defeito encontrado pelos testes e corrigido:** o sinal proativo "Ver programação" apontava para `/painel#programacao`, que era recusado pela lista de links permitidos (só aceitava `?` e `/`). Com isso, a ação sugerida pela IA perderia o destino. Corrigido em `src/lib/insights/signals.ts`.
 
@@ -101,7 +102,7 @@ Executado em 23/11/2026 contra o projeto Supabase do grupo (migração aplicada,
 
 Cada execução cria uma conta `nexo.e2e.<timestamp>@teste.dev` no projeto. Essas contas podem ser excluídas em **Authentication → Users**.
 
-**Observação da execução com IA real:** na revisão do plano, o Gemini respondeu uma vez `503 UNAVAILABLE` (alta demanda). O NEXO registrou o erro e entregou o plano das regras locais, identificado como tal, sem travar a tela. Falhas temporárias assim são comuns no nível gratuito.
+**Observação da execução com IA real:** na revisão do plano, o Gemini respondeu uma vez `503 UNAVAILABLE` (alta demanda). O NEXO registrou o erro e entregou o plano das regras locais, identificado como tal, sem travar a tela. Falhas temporárias assim são comuns no nível gratuito. **Melhoria feita a partir disso:** o cliente do Gemini agora repete automaticamente as falhas temporárias (408 e 5xx) até 3 vezes, com espera de cerca de 1 s e 2 s (`GEMINI_HTTP_OPTIONS` em `src/lib/ai/gemini.ts`). O 429 (limite da cota) não é repetido. Coberto por `ai-gemini-retry.test.ts` e conferido com uma chamada real ao Gemini usando a mesma configuração.
 
 **Defeitos encontrados por esta suíte e corrigidos:**
 

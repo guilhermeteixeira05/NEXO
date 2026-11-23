@@ -75,6 +75,7 @@
 - Mensagens junto ao campo, com ícone, `aria-invalid` e `aria-describedby`, dizendo como corrigir ("Informe um horário de término depois do início.").
 - Falhas da BrasilAPI: "Feriados indisponíveis no momento", e a página continua funcionando.
 - Falhas da IA com causa e orientação (chave inválida, limite gratuito atingido, sem conexão) — `aiErrorMessage`.
+- Falhas temporárias do Gemini (ex.: "alta demanda") são repetidas automaticamente antes de mostrar erro, e o planejamento continua funcionando com as regras locais se a IA não responder.
 - Depois de um envio recusado, o formulário **mantém o que foi digitado** e o usuário só corrige o campo indicado (`src/components/ui/useActionForm.ts`). Esse defeito (o React 19 limpava os campos) foi encontrado pelos testes autenticados e corrigido.
 - Página de erro com "Tentar novamente" e 404 com caminhos de volta.
 
