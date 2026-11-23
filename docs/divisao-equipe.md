@@ -7,7 +7,7 @@
 | Guilherme Pereira Teixeira | 824212194 |
 | Gabriel Pereira | 824228350 |
 | Henrique Araujo Soares | 824227998 |
-| _a preencher_ | _a preencher_ |
+| João Luiz da Silva | 82420546 |
 
 ## Frentes de trabalho
 
