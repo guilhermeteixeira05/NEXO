@@ -1,5 +1,5 @@
 import "server-only";
-import { GoogleGenAI, ThinkingLevel, type Content, type FunctionDeclaration, type Part } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel, type Content, type FunctionDeclaration, type HttpOptions, type Part } from "@google/genai";
 import { z } from "zod";
 import { getGeminiConfig } from "@/lib/env";
 
@@ -9,11 +9,27 @@ import { getGeminiConfig } from "@/lib/env";
  */
 let cached: { ai: GoogleGenAI; model: string; key: string } | null = null;
 
+/**
+ * Falhas temporárias do Gemini (ex.: 503 "alta demanda", comum na cota gratuita) são
+ * repetidas pelo próprio SDK: até 3 tentativas, esperando cerca de 1 s e depois 2 s.
+ * O 429 (limite da cota) NÃO é repetido: tentar de novo em seguida só gasta a cota e
+ * atrasa a resposta; o usuário recebe a mensagem pedindo para aguardar.
+ */
+export const GEMINI_HTTP_OPTIONS = {
+  timeout: 30_000, // por tentativa
+  retryOptions: {
+    attempts: 3, // inclui a primeira chamada
+    initialDelay: 1, // segundos
+    maxDelay: 4,
+    httpStatusCodes: [408, 500, 502, 503, 504],
+  },
+} satisfies HttpOptions;
+
 export function getGemini(): { ai: GoogleGenAI; model: string } | null {
   const cfg = getGeminiConfig();
   if (!cfg) return null;
   if (!cached || cached.key !== cfg.apiKey || cached.model !== cfg.model) {
-    cached = { ai: new GoogleGenAI({ apiKey: cfg.apiKey }), model: cfg.model, key: cfg.apiKey };
+    cached = { ai: new GoogleGenAI({ apiKey: cfg.apiKey, httpOptions: GEMINI_HTTP_OPTIONS }), model: cfg.model, key: cfg.apiKey };
   }
   return { ai: cached.ai, model: cached.model };
 }
