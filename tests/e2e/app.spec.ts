@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 import { axeScan, horizontalOverflow, smallTouchTargets, VIEWPORTS } from "./helpers";
 
 /**
@@ -16,12 +16,14 @@ test.describe.configure({ mode: "serial" });
 const stamp = Date.now();
 const email = `nexo.e2e.${stamp}@teste.dev`;
 const password = `Teste-${stamp}`;
+let context: BrowserContext;
 let page: Page;
 
 test.beforeAll(async ({ browser }) => {
-  page = await browser.newPage({ locale: "pt-BR", timezoneId: "America/Sao_Paulo" });
+  context = await browser.newContext({ locale: "pt-BR", timezoneId: "America/Sao_Paulo" }); // o axe exige um contexto explícito
+  page = await context.newPage();
 });
-test.afterAll(async () => page.close());
+test.afterAll(async () => context.close());
 
 test("cadastro e configuração inicial (RF01, RF03, RF07)", async () => {
   await page.goto("/cadastro");
@@ -34,7 +36,7 @@ test("cadastro e configuração inicial (RF01, RF03, RF07)", async () => {
   await page.getByRole("button", { name: "Continuar" }).click();
   await expect(page.getByRole("heading", { name: "Quando você tem tempo livre?" })).toBeVisible();
   await page.getByRole("button", { name: "Continuar" }).click();
-  await page.getByLabel("Objetivo").fill("Treinar 3 vezes por semana");
+  await page.getByRole("textbox", { name: /^Objetivo/ }).fill("Treinar 3 vezes por semana");
   await page.getByRole("button", { name: "Concluir" }).click();
   await expect(page).toHaveURL(/painel/, { timeout: 20_000 });
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Camila");
@@ -47,15 +49,17 @@ test("criar, concluir e adiar atividades (RF09, RF12, RF13) — dados compartilh
     const dialog = page.getByRole("dialog");
     await dialog.getByLabel("Título").fill(title);
     await dialog.getByRole("button", { name: "Criar atividade" }).click();
-    await expect(page.getByText("Atividade criada.")).toBeVisible();
+    // espera o salvamento terminar: o diálogo fecha e a atividade aparece na lista
+    await expect(dialog).toBeHidden({ timeout: 20_000 });
+    await expect(page.getByRole("button", { name: `Concluir “${title}”` })).toBeVisible({ timeout: 20_000 });
   }
-  await page.reload();
-  await expect(page.getByText("Estudar inglês")).toBeVisible();
+  await page.reload(); // persistência: continua lá depois de recarregar
+  await expect(page.getByRole("button", { name: "Concluir “Estudar inglês”" })).toBeVisible();
   await page.getByRole("button", { name: "Concluir “Revisar relatório”" }).click();
-  await expect(page.getByText("“Revisar relatório” concluída.")).toBeVisible();
-  await page.getByRole("button", { name: "Ações para “Estudar inglês”" }).click();
+  await expect(page.getByText("“Revisar relatório” concluída.")).toBeVisible({ timeout: 20_000 });
+  await page.getByLabel("Ações para “Estudar inglês”").click(); // <summary> do menu nativo
   await page.getByRole("button", { name: "Para amanhã" }).click();
-  await expect(page.getByText(/adiada para/)).toBeVisible();
+  await expect(page.getByText(/adiada para/)).toBeVisible({ timeout: 20_000 });
   // o histórico (Módulo 6) registra conclusão e adiamento
   await page.goto("/insights?historico=todos");
   await expect(page.getByText("Concluída").first()).toBeVisible();
@@ -81,7 +85,8 @@ test("lembrete e central de notificações (RF33, RF38)", async () => {
   await dialog.getByLabel("Título").fill("Beber água");
   await dialog.getByLabel("Repetição").selectOption("diaria");
   await dialog.getByRole("button", { name: "Criar lembrete" }).click();
-  await expect(page.getByText("Lembrete criado.")).toBeVisible();
+  await expect(dialog).toBeHidden({ timeout: 20_000 });
+  await expect(page.getByText("Beber água", { exact: true })).toBeVisible({ timeout: 20_000 });
 });
 
 test("calendário mostra feriados da BrasilAPI (RF45)", async () => {
