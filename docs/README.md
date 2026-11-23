@@ -1,5 +1,13 @@
 # Documentação do NEXO
 
+## Equipe
+
+| Integrante | RA |
+|---|---|
+| Guilherme Pereira Teixeira | 824212194 |
+| Gabriel Pereira | 824228350 |
+| Henrique Araujo Soares | 824227998 |
+
 ## Projeto acadêmico (Projeto A3)
 
 | Etapa | Documentos |

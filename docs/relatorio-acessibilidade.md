@@ -88,7 +88,7 @@ Os relatórios completos estão em `docs/relatorios/lighthouse/*.json` (abra em 
 
 | Item | Responsável | Como fazer |
 |---|---|---|
-| Revisar o contraste dos itens "incompletos" do axe no Painel (5) e no Planejamento (1) | Integrante 1 | DevTools → inspecionar o elemento → contraste ≥ 4,5:1 |
-| Executar WAVE nas telas publicadas | Integrante 1 | Extensão WAVE no Chrome/Firefox |
+| Revisar o contraste dos itens "incompletos" do axe no Painel (5) e no Planejamento (1) | Frente 1 | DevTools → inspecionar o elemento → contraste ≥ 4,5:1 |
+| Executar WAVE nas telas publicadas | Frente 1 | Extensão WAVE no Chrome/Firefox |
 | Teste com leitor de tela (NVDA no Windows ou TalkBack no Android) | Equipe | Percorrer o fluxo: cadastro → criar atividade → aprovar plano |
 | Teste com zoom de 200% nas telas autenticadas | Equipe | Ctrl + "+" no navegador |

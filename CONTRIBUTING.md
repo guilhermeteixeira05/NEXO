@@ -1,6 +1,6 @@
 # Como contribuir com o NEXO
 
-Guia para os 5 integrantes. Responsabilidades e contratos entre módulos: [docs/divisao-equipe.md](docs/divisao-equipe.md).
+Guia para os integrantes do grupo: Guilherme Pereira Teixeira, Gabriel Pereira e Henrique Araujo Soares. Frentes de trabalho, responsáveis e contratos entre módulos: [docs/divisao-equipe.md](docs/divisao-equipe.md).
 
 ## Branches
 
@@ -8,11 +8,11 @@ Guia para os 5 integrantes. Responsabilidades e contratos entre módulos: [docs/
 |---|---|
 | `main` | Versão estável, publicada na Vercel. Só recebe merge de `develop`. |
 | `develop` | Integração. Recebe os Pull Requests das features. |
-| `feature/interface` | Integrante 1 — interface, navegação, design system, responsividade |
-| `feature/usuarios` | Integrante 2 — cadastro, autenticação, perfil, objetivos |
-| `feature/tarefas` | Integrante 3 — tarefas, calendário, disponibilidade |
-| `feature/ia` | Integrante 4 — assistente, IA, planejamento |
-| `feature/lembretes` | Integrante 5 — lembretes, notificações, histórico, insights, BrasilAPI |
+| `feature/interface` | Frente 1 — interface, navegação, design system, responsividade |
+| `feature/usuarios` | Frente 2 — cadastro, autenticação, perfil, objetivos |
+| `feature/tarefas` | Frente 3 — tarefas, calendário, disponibilidade |
+| `feature/ia` | Frente 4 — assistente, IA, planejamento |
+| `feature/lembretes` | Frente 5 — lembretes, notificações, histórico, insights, BrasilAPI |
 
 Para tarefas menores, crie branches a partir da sua feature: `feature/tarefas-filtro-por-data`.
 
@@ -74,5 +74,5 @@ No primeiro `git push`, o Git Credential Manager abre a janela "Connect to GitHu
 
 Configuração do repositório (feita pelo dono):
 
-1. Em **Settings → Collaborators**, convide os 4 colegas (cada um aceita o convite recebido por e-mail).
+1. Em **Settings → Collaborators**, convide Gabriel Pereira e Henrique Araujo Soares (cada um aceita o convite recebido por e-mail).
 2. Recomendado: em **Settings → Branches**, proteja `main` e `develop` (exigir Pull Request e 1 aprovação).
