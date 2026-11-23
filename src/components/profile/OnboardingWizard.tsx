@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { useRef, useState, useTransition } from "react";
+import { useActionForm } from "@/components/ui/useActionForm";
 import { AvailabilityEditor, type Slot } from "@/components/profile/AvailabilityEditor";
 import { FormAlert, SelectField, SwitchField, TextField } from "@/components/ui/Field";
 import { SubmitButton } from "@/components/ui/SubmitButton";
@@ -15,7 +16,8 @@ const STEPS = ["Sobre você", "Preferências", "Horários livres", "Primeiro obj
  */
 export function OnboardingWizard({ defaultName, initialSlots }: { defaultName: string; initialSlots: Slot[] }) {
   const [step, setStep] = useState(0);
-  const [state, action] = useActionState(completeOnboardingAction, initialActionState);
+  const { state, pending, onSubmit } = useActionForm(completeOnboardingAction, initialActionState);
+  const [skipping, startSkip] = useTransition();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const e = state.fieldErrors ?? {};
 
@@ -34,7 +36,7 @@ export function OnboardingWizard({ defaultName, initialSlots }: { defaultName: s
       <p className="section-label" aria-live="polite">
         Etapa {step + 1} de {STEPS.length} · {STEPS[step]}
       </p>
-      <form action={action} className="form" noValidate>
+      <form onSubmit={onSubmit} className="form" noValidate>
         <FormAlert message={state.ok ? undefined : state.message} ok={false} />
 
         <section hidden={step !== 0} className="form" aria-labelledby="etapa-1">
@@ -102,7 +104,7 @@ export function OnboardingWizard({ defaultName, initialSlots }: { defaultName: s
               Voltar
             </button>
           ) : (
-            <button type="submit" className="btn btn--ghost" formAction={skipOnboardingAction} formNoValidate>
+            <button type="button" className="btn btn--ghost" disabled={pending || skipping} onClick={() => startSkip(() => skipOnboardingAction())}>
               Pular configuração
             </button>
           )}
@@ -111,7 +113,7 @@ export function OnboardingWizard({ defaultName, initialSlots }: { defaultName: s
               Continuar
             </button>
           ) : (
-            <SubmitButton pendingText="Salvando…">Concluir</SubmitButton>
+            <SubmitButton pending={pending} pendingText="Salvando…">Concluir</SubmitButton>
           )}
         </div>
       </form>
