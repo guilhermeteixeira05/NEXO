@@ -22,7 +22,7 @@ export default function SetupPage() {
           {!db ? <span>Sem o banco, não é possível criar contas nem salvar dados.</span> : null}
         </Notice>
         <Notice tone={ai ? "success" : "warning"}>
-          <strong>Inteligência artificial (Claude): {ai ? "configurada" : "não configurada"}</strong>
+          <strong>Inteligência artificial: {ai ? "configurada" : "não configurada"}</strong>
           {!ai ? <span>Sem a chave, o chat informa que a IA está indisponível e o planejamento usa apenas o algoritmo local.</span> : null}
         </Notice>
         <ol>
@@ -35,11 +35,11 @@ export default function SetupPage() {
             <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> (Project Settings → API).
           </li>
           <li>
-            Para a IA, crie uma chave em{" "}
-            <a href="https://console.anthropic.com" rel="noreferrer" target="_blank">
-              console.anthropic.com
+            Para a IA, crie uma chave gratuita no{" "}
+            <a href="https://aistudio.google.com/apikey" rel="noreferrer" target="_blank">
+              Google AI Studio
             </a>{" "}
-            e defina <code>ANTHROPIC_API_KEY</code> (somente no servidor).
+            e defina <code>GEMINI_API_KEY</code> (somente no servidor).
           </li>
           <li>Reinicie o servidor (<code>npm run dev</code>) ou faça um novo deploy na Vercel.</li>
         </ol>
