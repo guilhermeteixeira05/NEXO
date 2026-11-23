@@ -115,6 +115,19 @@ Cada execução cria uma conta `nexo.e2e.<timestamp>@teste.dev` no projeto. Essa
 
 Ajustes no próprio teste (não eram defeitos do app): seletores ambíguos, espera do salvamento antes de recarregar, contexto explícito do navegador para o axe, ignorar conteúdo de `<details>` fechado e medir o interruptor pela área do rótulo (o `<label>` inteiro, com 44 px de altura, aciona o campo).
 
+## 5.2 Revisão visual no navegador (conta de demonstração, Supabase e IA reais)
+
+Em 23/11/2026, o NEXO foi aberto no navegador em modo de produção (`next start`), com uma conta de demonstração e atividades de exemplo. A revisão encontrou defeitos que os testes automáticos não pegavam. Todos foram corrigidos e ganharam verificação automática:
+
+| Defeito | Causa | Correção | Verificação nova |
+|---|---|---|---|
+| A configuração inicial mostrava as 4 etapas de uma vez | `.form { display: flex }` vencia o atributo `hidden` das etapas | `[hidden] { display: none !important }` em `base.css` | O teste de cadastro confere que só a etapa atual aparece |
+| Depois de "Concluir" a configuração, a tela ficava em "Salvando…" enquanto a IA gerava o briefing do Painel | O Painel esperava a IA antes de aparecer | O briefing é carregado dentro de um `<Suspense>`: o Painel aparece na hora e as sugestões entram depois. O limite de cada tentativa do Gemini caiu para 20 s | O teste de cadastro exige o Painel em até 20 s |
+| No celular, o logotipo do cabeçalho aparecia sem o fundo azul | Os logotipos repetiam o mesmo `id` de gradiente; o primeiro estava no menu lateral, escondido no celular | Um `id` único por logotipo (`useId`) | As 10 telas são conferidas sem `id` repetido |
+| No celular, apareciam dois botões "Nova atividade" e o título "Painel" ficava cortado | `.btn { display: inline-flex }` vencia `.topbar__new { display: none }` | Seletor `.topbar .topbar__new` | Até 768 px, o botão do cabeçalho precisa estar escondido |
+
+O teste de responsividade com login passou a ter 3 minutos de limite: ele carrega 30 telas e faz 10 varreduras do axe, e com a IA real a soma passava de 60 s.
+
 ## 6. Lighthouse (`docs/relatorios/lighthouse/`)
 
 Executado com `npx lighthouse@13.6.0 <url> --preset=desktop` (ou sem preset, para celular) sobre `next start`:

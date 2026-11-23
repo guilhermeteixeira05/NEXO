@@ -78,6 +78,7 @@ Os relatórios completos estão em `docs/relatorios/lighthouse/*.json` (abra em 
 | 3.2.3 / 3.2.4 Consistência | Mesma navegação e mesmos componentes em todas as telas | Revisão |
 | 3.3.1–3.3.3 Erros | Texto junto ao campo, `aria-invalid`, sugestão de correção | Teste manual |
 | 3.3.4 Prevenção de erros | Confirmação de exclusão; propostas exigem aprovação | Teste manual |
+| 4.1.1 Análise (ids únicos) | Cada logotipo tem o próprio `id` de gradiente; o teste com login confere que nenhuma das 10 telas repete `id` | Playwright (aprovado) |
 | 4.1.2 Nome, função, valor | `aria-pressed` (em botões), rádios nativos nos seletores segmentados, `aria-current`, `aria-expanded`, `role="switch"`, `role="progressbar"` com valores | axe |
 | 4.1.3 Mensagens de status | `role="status"`/`aria-live` nos avisos, no chat (`role="log"`) e nas contagens de filtro | Leitor de tela |
 | Alvos de toque (apostila) | Mínimo de 44 × 44 px; botões de 48 px; interruptores acionados pelo rótulo inteiro | Playwright (aprovado nas páginas públicas e nas 10 telas autenticadas) |
